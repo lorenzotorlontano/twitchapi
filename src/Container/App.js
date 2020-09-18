@@ -3,7 +3,7 @@ import React from 'react'
 function App() {
     return (
         <div>
-            initial project lllllllllll
+            initial project
         </div>
     )
 }
