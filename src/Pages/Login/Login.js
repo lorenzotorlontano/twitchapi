@@ -14,7 +14,7 @@ function Login() {
           id="generic-btn-premium"
           role="button"
         >
-          LOGIN
+          LOGIN test
         </a>
         </div>
     )
