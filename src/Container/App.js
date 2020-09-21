@@ -1,9 +1,10 @@
 import React from 'react'
+import Login from '../Pages/Login/Login'
 
 function App() {
     return (
         <div>
-            initial project lllllllllll
+            <Login/>
         </div>
     )
 }
