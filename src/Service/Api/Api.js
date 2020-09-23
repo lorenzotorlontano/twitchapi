@@ -36,6 +36,11 @@ export async function getToken() {
 export async function getSuggestedHomeStreams() {
   return axiosInstance.get(`/streams?first=6`);
 }
+
+export async function getVideos() {
+  return axiosInstance.get(`/videos`);
+}
+
 export async function getMe() {
   return axiosInstance.get(`/users?login=lorenzotorlontano`);
 }
@@ -47,7 +52,6 @@ export async function getMyUser() {
 export async function getUsers(id) {
   return axiosInstance.get(`/users/?id=${id}`);
 }
-
 
 export async function getStreams() {
   return axiosInstance.get(`/streams`);

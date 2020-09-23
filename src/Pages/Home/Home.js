@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getGames } from "../../Service/Api/Api";
 import HomeCarousel from '../../Components/HomeCarousel'
+import HomeSuggestedStreams from "../../Components/HomeSuggestedStreams";
 
-function Home() {
+export default function Home() {
   const [games, setGames] = useState();
 
   useEffect(() => {
@@ -13,6 +14,7 @@ function Home() {
 
   return (
     <><div>
+      <HomeSuggestedStreams />
       <HomeCarousel />
     </div>
       <div style={{}}>
