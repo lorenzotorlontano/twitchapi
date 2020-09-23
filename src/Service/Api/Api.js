@@ -2,7 +2,6 @@ import Axios from "axios";
 
 const bracketsToken = localStorage.getItem("token");
 
-
 let strArrayToken;
 let token;
 
@@ -13,7 +12,6 @@ if (bracketsToken !== null) {
   console.log(strArrayToken);
 }
 
-console.log("di token", token);
 
 const axiosInstance = Axios.create({
   baseURL: "https://api.twitch.tv/helix",
@@ -37,4 +35,20 @@ export async function getToken() {
 
 export async function getSuggestedHomeStreams() {
   return axiosInstance.get(`/streams?first=6`);
+}
+export async function getMe() {
+  return axiosInstance.get(`/users?login=lorenzotorlontano`);
+}
+
+export async function getMyUser() {
+  return axiosInstance.get(`/users?id=584434217`);
+}
+
+export async function getUsers(id) {
+  return axiosInstance.get(`/users/?id=${id}`);
+}
+
+
+export async function getStreams() {
+  return axiosInstance.get(`/streams`);
 }
