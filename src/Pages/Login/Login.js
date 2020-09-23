@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { authEndpoint, clientId, secret, grantType } from "../../Config/Config";
 import { getToken } from "../../Service/Api/Api";
 import { useHistory } from "react-router-dom";
 
@@ -16,8 +15,8 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1 onClick={handleCall}>LOGIN</h1>
+    <div style={{marginTop: '500px', textAlign: 'center'}}>
+      <h1 style={{}} onClick={handleCall}>LOGIN</h1>
     </div>
   );
 }
