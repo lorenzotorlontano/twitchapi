@@ -34,3 +34,7 @@ export async function getGames() {
 export async function getToken() {
   return secondInstance.post();
 }
+
+export async function getSuggestedHomeStreams() {
+  return axiosInstance.get(`/streams?first=6`);
+}

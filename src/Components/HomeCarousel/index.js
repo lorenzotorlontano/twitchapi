@@ -1,23 +1,33 @@
-import React from 'react';
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';
+import React, { useEffect, useState, setState } from 'react';
 
 export default function HomeCarousel() {
+
+
+
     return (
         <div>
-            <CarouselProvider
-                naturalSlideWidth={100}
-                naturalSlideHeight={125}
-                totalSlides={3}
-            >
-                <Slider>
-                    <Slide index={0}>I am the first Slide.</Slide>
-                    <Slide index={1}>I am the second Slide.</Slide>
-                    <Slide index={2}>I am the third Slide.</Slide>
-                </Slider>
-                <ButtonBack>Back</ButtonBack>
-                <ButtonNext>Next</ButtonNext>
-            </CarouselProvider>
+            <p>carousel placeholder</p>
+            {/* <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="..." alt="First slide">
+                </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Second slide">
+                </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="..." alt="Third slide">
+                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div> */}
         </div>
     )
 }
