@@ -10,15 +10,16 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import StreamList from "../../Components/StreamList/index";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import RouterView from "../../Components/RouterView/routerView";
-import { getStreams, getMe, getUsers } from "../../Service/Api/Api";
+import { getStreams, getMe, getUsers, getMyUser } from "../../Service/Api/Api";
 
 const drawerWidth = 200;
 
@@ -52,6 +53,8 @@ const useStyles = makeStyles((theme) => ({
   drawerOpen: {
     width: drawerWidth,
     top: "65px",
+    color: 'white',
+    backgroundColor: '#1f1f23',
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -63,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
+    backgroundColor: '#1f1f23',
+    color: 'white',
     width: theme.spacing(7) + 1,
     top: "65px",
     [theme.breakpoints.up("sm")]: {
@@ -84,51 +89,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer({ streams, currentUrl }) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const [streams, setStreams] = useState();
+
+  const [open, setOpen] = useState(true);
   const [users, setUsers] = useState();
+  const [moreDown, setMoreDown] = useState(false);
+  const [more, setMore] = useState(false);
+  const [myUser, setMyUser] = useState();
   const [currentId, setCurrentId] = useState();
-  const [currentUrl, setCurrentUrl] = useState(null);
-
-  const [me, setMe] = useState();
 
   useEffect(() => {
-    const resp = getStreams().then((re) => {
-      setStreams(re.data.data);
-      console.log("sto facendo il console log STREAMS   ", re.data.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const resp = getMe().then((re) => {
-      setMe(re.data);
-      console.log("sto facendo il console log di MEEE   ", re.data.data);
+    const resp = getMyUser().then((re) => {
+      setMyUser(re);
     });
   }, []);
 
   const handleDrawerClose = () => {
-    setOpen(!open);
+    return (
+      setOpen(!open),
+      open === false ? (setMore(false), setMoreDown(false)) : null
+    );
   };
 
-  useEffect(() => {
-    let arrayUrl = [];
-    console.log("dabfv", streams !== undefined ? streams[0].user_id : null);
-    if (streams !== undefined) {
-      streams.map((va, i) => {
-        let resp = getUsers(va.user_id && va.user_id).then((re) => {
-          console.log(re.data.data[0].profile_image_url);
-          arrayUrl.push(re.data.data[0].profile_image_url);
-        });
-        setCurrentUrl(arrayUrl);
-      });
-    }
-  }, [streams]);
+  let firstValue = Math.floor(streams.length / 4) < 1 ? 1 : Math.floor(streams.length / 4) ; //5
 
-  console.log(currentUrl);
-  return streams !== undefined ? (
+  let i = Math.floor(streams.length / 2); // 10
+
+  let j =  Math.floor(streams.length / 2 + streams.length / 4); // 15
+  console.log('fv', firstValue, 'i',i ,'j',j, 'lng', streams.length)
+
+  return (
     <div className={classes.root}>
       <CssBaseline />
       <Drawer
@@ -150,36 +142,112 @@ export default function MiniDrawer() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {currentUrl &&
-            streams.map((text, index) =>
-              index < 6 ? (
-                <ListItem key={index} button>
-                  <img
-                    style={{ width: "50px", height: "50px" }}
-                    src={currentUrl[index]}
-                  />
+        {open === true ? (
+          <>
+            <List style={{}}>
+              {currentUrl &&
+                streams.map((text, index) =>
+                  index < firstValue ? (
+                    <StreamList
+                      text={open === true ? text : null}
+                      index={index}
+                      currentUrl={currentUrl[index]}
+                    />
+                  ) : null
+                )}
 
-                  <ListItemText primary={text.user_name} />
-                  <ListItemText primary={text.viewer_count} />
-                </ListItem>
-              ) : null
-            )}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+              {more
+                ? streams.map((text, index) =>
+                    index + firstValue < i ? (
+                      <StreamList
+                        text={open === true ? text : null}
+                        index={index + firstValue}
+                        currentUrl={currentUrl[index + firstValue]}
+                      />
+                    ) : null
+                  )
+                : null}
+
+              {!more && streams.length > 3 ? (
+                <button onClick={() => setMore(true)}>MOSTRA DI PIU'</button>
+              ) : null}
+              {more  && streams.length > 3 ? (
+                <div>
+                  <button onClick={() => setMore(false)}>MOSTRA DI MENO</button>
+                </div>
+              ) : null}
+            </List>
+            <Divider />
+            <List style={{}}>
+              {currentUrl &&
+                streams.map((text, index) =>
+                index  + i < j ? (
+                    <StreamList
+                      text={open === true ? text : null}
+                      index={index + i}
+                      currentUrl={currentUrl[index + i]}
+                    />
+                  ) : null
+                )}
+
+              {moreDown && streams
+                ? streams.map((text, index) =>
+                    index + j < streams.length ? (
+                      <StreamList
+                        text={open === true ? text : null}
+                        index={index + j}
+                        currentUrl={currentUrl[index + j]}
+                      />
+                    ) : null
+                  )
+                : null}
+
+              {!moreDown  && streams.length >= 3 ? (
+                <div>
+                  <button onClick={() => setMoreDown(true)}>
+                    MOSTRA DI PIU'
+                  </button>
+                </div>
+              ) : null}
+
+              {moreDown  && streams.length >= 3 ? (
+                <div>
+                  <button onClick={() => setMoreDown(false)}>
+                    MOSTRA DI MENO'
+                  </button>
+                </div>
+              ) : null}
+            </List>
+          </>
+        ) : (
+          <>
+            {currentUrl && streams
+              ? streams.map((text, index) =>
+                  index < i ? (
+                    <StreamList
+                      text={open === true ? text : null}
+                      index={index}
+                      currentUrl={currentUrl[index]}
+                    />
+                  ) : null
+                )
+              : null}
+            <Divider />
+            {currentUrl && streams
+              ? streams.map((text, index) =>
+                  index + i < streams.length ? (
+                    <StreamList
+                      text={open === true ? text : null}
+                      index={index + i}
+                      currentUrl={currentUrl[index + i]}
+                    />
+                  ) : null
+                )
+              : null}
+          </>
+        )}
       </Drawer>
-
       <RouterView />
     </div>
-  ) : null;
+  );
 }

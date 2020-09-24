@@ -8,8 +8,6 @@ let token;
 if (bracketsToken !== null) {
   strArrayToken = bracketsToken.split('"');
   token = strArrayToken[1];
-  console.log();
-  console.log(strArrayToken);
 }
 
 
