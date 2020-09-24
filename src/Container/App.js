@@ -7,11 +7,11 @@ import RouterView from '../Components/RouterView/routerView'
 
 
 function App() {
-  return (
-    <div style={{}}>
-      <WrapperSideTop />
-    </div>
-  );
+    return (
+        <div style={{}}>
+            <WrapperSideTop />
+        </div>
+    );
 }
 
 export default App;
