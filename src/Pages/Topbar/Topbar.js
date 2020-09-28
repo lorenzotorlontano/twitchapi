@@ -15,6 +15,13 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { getStreams, getMe, getUsers } from "../../Service/Api/Api";
+import Grid from "@material-ui/core/Grid";
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import Button from '@material-ui/core/Button';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -174,52 +181,79 @@ export default function Topbar() {
   );
 
   return (
-
-
-    <div className={classes.grow}>
-
-      <AppBar style={{ backgroundColor: '#18181b' }} position="static">
-  
-          <Toolbar style={{ }}>
-
-          <div style={{ alignSelf: 'center', display: 'flex'}}>
-            <img
-              style={{ width: "20px" }}
-              src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
-            />
-          </div>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+    <Grid style={{position: 'fixed'}} container spacing={0}>
+      <AppBar style={{ backgroundColor: "#18181b" }} position="static">
+        <Toolbar style={{}}>
+          <Grid
+            style={{ display: "flex", justifyContent: "space-between" , alignSelf: 'center', alignItems: 'center'}}
+            item
+            xs={4}
+            sm={4}
+          >
+            <div style={{  }}>
+              <img
+                style={{ width: "20px" }}
+                src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
+            <div style={{fontSize: '20px', }}>Seguito</div>
+            <div style={{fontSize: '20px', }}>Sfoglia</div>
+            <div style={{backgroundColor: '#adadb8',  height: '40px', width: '1px',}}></div>
+            <div style={{fontSize: '20px',}}>Esports</div>
+            <div style={{fontSize: '20px', }}>Musica</div>
+            <div style={{width: '20px', }}><MoreHorizIcon/></div>
+          </Grid>
+
+          <Grid item xs={4} sm={4}>
 
 
-          <div className={classes.grow} />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </div>
+          </Grid>
 
-          <div className={classes.sectionDesktop}>
-
+          <Grid
+            style={{
+              display: "flex",
+              alignContent: "flex-start",
+              alignSelf: "center",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+            item
+            xs={4}
+            sm={4}
+          >
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+                <CardGiftcardIcon style={{width:'20px'}} />
               </Badge>
             </IconButton>
-
 
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
+                <NotificationsNoneOutlinedIcon style={{width:'20px'}}/>
               </Badge>
             </IconButton>
+
+            <IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <ChatBubbleOutlineOutlinedIcon style={{width:'20px'}} />
+              </Badge>
+            </IconButton>
+
+            <Button style={{color: 'white'}}>Compra Bit</Button>
+
 
 
             <IconButton
@@ -238,26 +272,13 @@ export default function Topbar() {
               ) : null}
             </IconButton>
 
-          </div>
 
-
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-
-
+          </Grid>
         </Toolbar>
       </AppBar>
+
       {renderMobileMenu}
       {renderMenu}
-    </div>
+    </Grid>
   );
 }
