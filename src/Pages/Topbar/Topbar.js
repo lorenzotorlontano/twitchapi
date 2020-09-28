@@ -174,18 +174,21 @@ export default function Topbar() {
   );
 
   return (
+
+
     <div className={classes.grow}>
-      <AppBar style={{ backgroundColor: "#333" }} position="static">
-        <Toolbar style={{}}>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          ></IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
-          </Typography>
+
+      <AppBar style={{ backgroundColor: '#18181b' }} position="static">
+  
+          <Toolbar style={{ }}>
+
+          <div style={{ alignSelf: 'center', display: 'flex'}}>
+            <img
+              style={{ width: "20px" }}
+              src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
+            />
+          </div>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -199,18 +202,26 @@ export default function Topbar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+
+
           <div className={classes.grow} />
+
           <div className={classes.sectionDesktop}>
+
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
+
+
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+
+
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -219,9 +230,17 @@ export default function Topbar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              {me ? <img src={me.profile_image_url} style={{width: '30px', borderRadius: '50%'}} /> : null}
+              {me ? (
+                <img
+                  src={me.profile_image_url}
+                  style={{ width: "30px", borderRadius: "50%" }}
+                />
+              ) : null}
             </IconButton>
+
           </div>
+
+
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
@@ -233,6 +252,8 @@ export default function Topbar() {
               <MoreIcon />
             </IconButton>
           </div>
+
+
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

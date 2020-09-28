@@ -20,12 +20,16 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import RouterView from "../../Components/RouterView/routerView";
 import { getStreams, getMe, getUsers, getMyUser } from "../../Service/Api/Api";
+import "../Sidebar/StyleSidebar/sidebar.css";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    height: "100px",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -49,12 +53,15 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
+    padding: "0px",
   },
   drawerOpen: {
     width: drawerWidth,
     top: "65px",
-    color: 'white',
-    backgroundColor: '#1f1f23',
+
+    paddingBottom: "70px",
+    color: "white",
+    backgroundColor: "#1f1f23",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -66,20 +73,19 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
-    backgroundColor: '#1f1f23',
-    color: 'white',
+    margin: "0px",
+    padding: "0px",
+    backgroundColor: "#1f1f23",
+    color: "white",
     width: theme.spacing(7) + 1,
     top: "65px",
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1,
-    },
   },
   toolbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     marginRight: "10px",
-
+    color: "white",
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
@@ -99,6 +105,8 @@ export default function MiniDrawer({ streams, currentUrl }) {
   const [more, setMore] = useState(false);
   const [myUser, setMyUser] = useState();
   const [currentId, setCurrentId] = useState();
+  const [color, setColor] = useState("#333");
+  const [border, setBorder] = useState("0");
 
   useEffect(() => {
     const resp = getMyUser().then((re) => {
@@ -113,12 +121,22 @@ export default function MiniDrawer({ streams, currentUrl }) {
     );
   };
 
-  let firstValue = Math.floor(streams.length / 4) < 1 ? 1 : Math.floor(streams.length / 4) ; //5
+  const switchStyle = () => {
+    setColor("black");
+    setBorder("1px solid #772ce8");
+  };
+
+  const switchDefault = () => {
+    setColor('#333')
+    setBorder('0')
+  }
+
+  let firstValue =
+    Math.floor(streams.length / 4) < 1 ? 1 : Math.floor(streams.length / 4); //5
 
   let i = Math.floor(streams.length / 2); // 10
 
-  let j =  Math.floor(streams.length / 2 + streams.length / 4); // 15
-  console.log('fv', firstValue, 'i',i ,'j',j, 'lng', streams.length)
+  let j = Math.floor(streams.length / 2 + streams.length / 4); // 15
 
   return (
     <div className={classes.root}>
@@ -136,15 +154,35 @@ export default function MiniDrawer({ streams, currentUrl }) {
           }),
         }}
       >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+        <div style={{ display: "flex" }}>
+          {open === true ? (
+            <div
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                fontSize: "12px",
+                padding: "10px",
+                alignSelf: "center",
+              }}
+            >
+              Canali che segui
+            </div>
+          ) : null}
+
+          <IconButton
+            style={{
+              color: "white",
+              diplay: "flex",
+              marginLeft: open === true ? "55px" : null,
+            }}
+            onClick={handleDrawerClose}
+          >
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
-        <Divider />
         {open === true ? (
-          <>
-            <List style={{}}>
+          <div style={{ padding: "0px" }}>
+            <List style={{ padding: "0px" }}>
               {currentUrl &&
                 streams.map((text, index) =>
                   index < firstValue ? (
@@ -169,11 +207,21 @@ export default function MiniDrawer({ streams, currentUrl }) {
                 : null}
 
               {!more && streams.length > 3 ? (
-                <button onClick={() => setMore(true)}>MOSTRA DI PIU'</button>
+                <button
+                  className="showMoreButton"
+                  onClick={() => setMore(true)}
+                >
+                  Mostra di più
+                </button>
               ) : null}
-              {more  && streams.length > 3 ? (
+              {more && streams.length > 3 ? (
                 <div>
-                  <button onClick={() => setMore(false)}>MOSTRA DI MENO</button>
+                  <button
+                    className="showMoreButton"
+                    onClick={() => setMore(false)}
+                  >
+                    Mostra di meno
+                  </button>
                 </div>
               ) : null}
             </List>
@@ -181,7 +229,7 @@ export default function MiniDrawer({ streams, currentUrl }) {
             <List style={{}}>
               {currentUrl &&
                 streams.map((text, index) =>
-                index  + i < j ? (
+                  index + i < j ? (
                     <StreamList
                       text={open === true ? text : null}
                       index={index + i}
@@ -202,25 +250,31 @@ export default function MiniDrawer({ streams, currentUrl }) {
                   )
                 : null}
 
-              {!moreDown  && streams.length >= 3 ? (
+              {!moreDown && streams.length >= 3 ? (
                 <div>
-                  <button onClick={() => setMoreDown(true)}>
-                    MOSTRA DI PIU'
+                  <button
+                    className="showMoreButton"
+                    onClick={() => setMoreDown(true)}
+                  >
+                    Mostra di meno
                   </button>
                 </div>
               ) : null}
 
-              {moreDown  && streams.length >= 3 ? (
+              {moreDown && streams.length >= 3 ? (
                 <div>
-                  <button onClick={() => setMoreDown(false)}>
-                    MOSTRA DI MENO'
+                  <button
+                    className="showMoreButton"
+                    onClick={() => setMoreDown(false)}
+                  >
+                    Mostra di meno
                   </button>
                 </div>
               ) : null}
             </List>
-          </>
+          </div>
         ) : (
-          <>
+          <div>
             {currentUrl && streams
               ? streams.map((text, index) =>
                   index < i ? (
@@ -244,9 +298,47 @@ export default function MiniDrawer({ streams, currentUrl }) {
                   ) : null
                 )
               : null}
-          </>
+          </div>
         )}
+        <Divider style={{ marginBottom: "20px" }} />
+        {open === true ? (
+          <div
+            style={{
+              display: "flex",
+              position: "fixed",
+              bottom: "5px",
+              backgroundColor: color,
+              color: "white",
+              alignSelf: "center",
+              borderRadius: "5px",
+              height: "30px",
+              marginTop: "10px",
+              width: "220px",
+              border: border,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignSelf: "center",
+                color: "#ADADB8",
+                padding: "2px",
+              }}
+            >
+              <SearchIcon />
+            </div>
+            <InputBase
+            onBlur={switchDefault}
+              onClick={switchStyle}
+              style={{ color: "white", fontSize: "13px", width: "100%" }}
+              placeholder="Cerca a aggiungi i tuoi amici"
+              classes={{}}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </div>
+        ) : null}
       </Drawer>
+
       <RouterView />
     </div>
   );
