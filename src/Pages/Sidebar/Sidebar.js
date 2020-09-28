@@ -108,11 +108,13 @@ export default function MiniDrawer({ streams, currentUrl }) {
   const [color, setColor] = useState("#333");
   const [border, setBorder] = useState("0");
 
+
   useEffect(() => {
     const resp = getMyUser().then((re) => {
       setMyUser(re);
     });
   }, []);
+
 
   const handleDrawerClose = () => {
     return (
