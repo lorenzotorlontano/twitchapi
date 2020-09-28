@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { getSuggestedHomeStreams } from '../../Service/Api/Api'
 import ReactPlayer from "react-player"
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 export default function HomeSuggestedStreams() {
 
@@ -20,45 +23,26 @@ export default function HomeSuggestedStreams() {
         return formattedImgFinal;
     }
 
-    console.log(suggestedHomeStreams)
+    console.log("Suggested Home Streams", suggestedHomeStreams)
 
     return (
         <div>
             {suggestedHomeStreams && suggestedHomeStreams.map((img) => {
                 return (
+
                     // <img src={`${thumbnailFormatter(img.thumbnail_url)}`}
                     //     alt={"Not found"} key={`${img.id}`}
                     // />
+
                     <div>
                         <ReactPlayer
-                            url={`https://www.twitch.tv/${img.user_name}`}
+                            url={`https://www.twitch.tv/${img.user_name.replace(/\s+/g, '')}`}
                             controls
                         />
                     </div>
 
-
                 )
             })}
-            {/* <div>
-                <iframe
-                    src="https://player.twitch.tv/js/embed/v1.js/?video=12783852&parent=localhost/home&autoplay=false"
-                    // src="https://player.twitch.tv/?channel=MatteoHS"
-
-                    height="324px"
-                    width="633px"
-                    frameborder={0}
-                    scrolling="no"
-                    allowfullscreen={true}>
-                </iframe>
-            </div> */}
-
-            <div>
-                <ReactPlayer
-                    url={`https://www.twitch.tv/${suggestedHomeStreams[0]?.user_name}`}
-                    controls
-                />
-            </div>
-
 
         </div>
     )
