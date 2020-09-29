@@ -6,7 +6,14 @@ import DetailsSearched from '../../Pages/DetailsSearched/detailsSearched'
 
 function RouterView() {
   return (
-    <div style={{position:'relative', top:'64px'}}>
+    <div style={{
+      position: 'relative',
+      top: '70px',
+      backgroundColor: "#18181B",
+      height: "100vh",
+      width: "100%",
+      zIndex: "-1"
+    }}>
       <Router>
         <Switch>
           <Route path="/home">
