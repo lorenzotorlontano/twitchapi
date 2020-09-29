@@ -13,10 +13,10 @@ export default function Home() {
   }, []);
 
   return (
-    <><div>
+    <div>
       <HomeSuggestedStreams />
       <HomeCarousel />
     </div>
-    </>
+
   );
 }

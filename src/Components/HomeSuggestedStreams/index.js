@@ -3,26 +3,17 @@ import { getSuggestedHomeStreams } from '../../Service/Api/Api'
 import ReactPlayer from "react-player"
 import { useStyles } from './styles';
 import Grid from '@material-ui/core/Grid';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
 
 export default function HomeSuggestedStreams() {
 
     const classes = useStyles();
 
     const [suggestedHomeStreams, setSuggestedStreams] = useState([])
+    const [showMore, setShowMore] = useState(false)
+    const [buttonStatus, setButtonStatus] = useState(true)
 
     useEffect(() => {
         const getHomeSuggested = async () => {
@@ -32,61 +23,52 @@ export default function HomeSuggestedStreams() {
         getHomeSuggested()
     }, [])
 
+    const handleClick = () => {
+        setShowMore(true)
+        setButtonStatus(false)
+    }
+
     console.log("Suggested Home Streams", suggestedHomeStreams)
 
     return (
 
-        <div>
-
-
-
-            <div className={classes.root}>
-                <Grid container spacing={1} className={classes.videoWrapper}>
-                    {suggestedHomeStreams && suggestedHomeStreams.map((img) => {
-                        return (
-                            <Grid item xs={12} md={6} lg={4} >
-                                <Card className={classes.videoWrapper}>
-
-                                    <CardMedia>
-                                        {/* <ReactPlayer
-                                            className={classes.gridItem}
-                                            width={"380px"}
-                                            height={"270px"}
-                                            url={`https://www.twitch.tv/${img.user_name.replace(/\s+/g, '')}`}
-                                            controls={true}
-                                        // style={{ display: "flex", justifyContent: "space-evenly" }} */}
-                                        {/* /> */}
-                                    </CardMedia>
-
-                                    <CardContent>
-                                        <Grid container>
-
-                                            <Grid item xs={12}>
-                                                <ReactPlayer
-                                                    className={classes.gridItem}
-                                                    width={"380px"}
-                                                    height={"270px"}
-                                                    url={`https://www.twitch.tv/${img.user_name.replace(/\s+/g, '')}`}
-                                                    controls={true}
-                                                // style={{ display: "flex", justifyContent: "space-evenly" }}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <h1>Some text</h1>
-                                            </Grid>
+        <div className={classes.root} >
+            <Grid container spacing={1} className={classes.videoWrapper} >
+                {suggestedHomeStreams && suggestedHomeStreams.map((img, index) => {
+                    return (
+                        <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper} >
+                            <Card style={{ width: "400px", display: index > 2 && !showMore ? "none" : "block" }} >
+                                <CardContent>
+                                    <Grid container>
+                                        <Grid item xs={12} className={classes.gridItem}>
+                                            <ReactPlayer
+                                                width={"370px"}
+                                                height={"250px"}
+                                                url={`https://www.twitch.tv/${img.user_name.replace(/\s+/g, '')}`}
+                                                controls={true}
+                                            />
                                         </Grid>
-                                    </CardContent>
+                                        <Grid item xs={12}>
+                                            <h1>Some text</h1>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    )
+                })}
+            </Grid>
 
-
-                                </Card>
-
-
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </div >
+            {buttonStatus ? (
+                <Button
+                    style={{ borderRadius: "6px", marginTop: "6px" }}
+                    onClick={() => handleClick()}
+                    variant="contained">Show more
+                </Button>)
+                :
+                null}
 
         </div >
+
     )
 }
