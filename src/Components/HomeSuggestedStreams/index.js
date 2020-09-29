@@ -23,8 +23,6 @@ export default function HomeSuggestedStreams() {
         return formattedImgFinal;
     }
 
-    console.log("Suggested Home Streams", suggestedHomeStreams)
-
     return (
         <div>
             {suggestedHomeStreams && suggestedHomeStreams.map((img) => {
