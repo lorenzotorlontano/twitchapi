@@ -32,8 +32,6 @@ export default function HomeSuggestedStreams() {
         getHomeSuggested()
     }, [])
 
-    console.log("Suggested Home Streams", suggestedHomeStreams)
-
     return (
 
         <div>

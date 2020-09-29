@@ -54,3 +54,10 @@ export async function getUsers(id) {
 export async function getStreams() {
   return axiosInstance.get(`/streams`);
 }
+
+export async function searchCategories(param) {
+  return axiosInstance.get(`/search/categories?query=${param}`);
+}
+export async function searchChannels(param) {
+  return axiosInstance.get(`/search/channels?query=${param}`);
+}

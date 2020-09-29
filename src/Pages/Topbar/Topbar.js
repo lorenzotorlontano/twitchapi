@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import { useHistory } from "react-router-dom";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -16,12 +17,13 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { getStreams, getMe, getUsers } from "../../Service/Api/Api";
 import Grid from "@material-ui/core/Grid";
-import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import Button from '@material-ui/core/Button';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-
+import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
+import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
+import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
+import Button from "@material-ui/core/Button";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import "../Topbar/topbar.css";
+import { searchCategories } from "../../Service/Api/Api";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -42,27 +44,32 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: "5px 5px 5px 5px",
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
+
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: "auto",
+      width: "400px",
     },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: "100%",
+    right: "0px",
     position: "absolute",
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#29292C",
+    borderRadius: "0px 5px 5px 0px",
+    padding: "4px",
+    color: "#8B8B8D",
   },
   inputRoot: {
     color: "inherit",
@@ -70,8 +77,8 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
+    paddingLeft: "10px",
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: "20ch",
@@ -96,9 +103,15 @@ export default function Topbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [me, setMe] = useState();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [color, setColor] = useState("#333");
+  const [searchCate, setSearchCatego] = useState();
+  const [param, setParam] = useState();
+
+  const [border, setBorder] = useState("0");
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
 
   useEffect(() => {
     const resp = getMe().then((re) => {
@@ -122,6 +135,26 @@ export default function Topbar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const switchStyle = () => {
+    setColor("black");
+    setBorder("1px solid #772ce8");
+  };
+
+  const switchDefault = () => {
+    setColor("#333");
+    setBorder("0");
+  };
+
+  const handleWrite = (e) => {
+    setParam(e.target.value);
+    console.log('cioa', e.event)
+    if(e.key === "Enter" || e.keyCode === 13) {
+      window.location.assign(`/detailsSearched/${param}`);
+    }
+  };
+
+  console.log("param ", param);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -181,37 +214,44 @@ export default function Topbar() {
   );
 
   return (
-    <Grid style={{position: 'fixed'}} container spacing={0}>
-      <AppBar style={{ backgroundColor: "#18181b" }} position="static">
+    <Grid style={{ position: "fixed" }} container spacing={0}>
+      <AppBar style={{ backgroundColor: "#18181B" }} position="static">
         <Toolbar style={{}}>
           <Grid
-            style={{ display: "flex", justifyContent: "space-between" , alignSelf: 'center', alignItems: 'center'}}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignSelf: "center",
+              alignItems: "center",
+            }}
             item
             xs={4}
             sm={4}
           >
-            <div style={{  }}>
-              <img
-                style={{ width: "20px" }}
-                src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
-              />
-            </div>
-            <div style={{fontSize: '20px', }}>Seguito</div>
-            <div style={{fontSize: '20px', }}>Sfoglia</div>
-            <div style={{backgroundColor: '#adadb8',  height: '40px', width: '1px',}}></div>
-            <div style={{fontSize: '20px',}}>Esports</div>
-            <div style={{fontSize: '20px', }}>Musica</div>
-            <div style={{width: '20px', }}><MoreHorizIcon/></div>
+            <img
+              className="iconTwitch"
+              src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
+            />
+
+            <div style={{ fontSize: "19px" }}>Seguito</div>
+            <div style={{ fontSize: "19px" }}>Sfoglia</div>
+            <div
+              style={{ backgroundColor: "white", height: "40px", width: "1px" }}
+            ></div>
+            <div style={{ fontSize: "19px" }}>Esports</div>
+            <div style={{ fontSize: "19px" }}>Musica</div>
+            <MoreHorizIcon />
           </Grid>
 
           <Grid item xs={4} sm={4}>
-
-
             <div className={classes.search}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                <SearchIcon style={{ fontSize: "32px" }} />
               </div>
               <InputBase
+                onKeyUp={(e) => handleWrite(e)}
+                // onBlur={switchDefault}
+                // onClick={switchStyle}
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
@@ -236,25 +276,23 @@ export default function Topbar() {
           >
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <CardGiftcardIcon style={{width:'20px'}} />
+                <CardGiftcardIcon style={{ width: "20px" }} />
               </Badge>
             </IconButton>
 
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
-                <NotificationsNoneOutlinedIcon style={{width:'20px'}}/>
+                <NotificationsNoneOutlinedIcon style={{ width: "20px" }} />
               </Badge>
             </IconButton>
 
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
-                <ChatBubbleOutlineOutlinedIcon style={{width:'20px'}} />
+                <ChatBubbleOutlineOutlinedIcon style={{ width: "20px" }} />
               </Badge>
             </IconButton>
 
-            <Button style={{color: 'white'}}>Compra Bit</Button>
-
-
+            <Button style={{ color: "white" }}>Compra Bit</Button>
 
             <IconButton
               edge="end"
@@ -271,8 +309,6 @@ export default function Topbar() {
                 />
               ) : null}
             </IconButton>
-
-
           </Grid>
         </Toolbar>
       </AppBar>

@@ -10,7 +10,6 @@ function WrapperSideTop() {
   useEffect(() => {
     getStreams().then((re) => {
       setStreams(re.data.data);
-      console.log('re', re.data.data)
     });
   }, []);
 
@@ -21,7 +20,6 @@ function WrapperSideTop() {
         (va) => va.user_id && promises.push(getUsers(va.user_id))
       );
       Promise.all(promises).then((responses) => {
-        console.log('response', responses);
         const imagesUrl = responses.map(
           (res) => res.data.data[0].profile_image_url
         );
