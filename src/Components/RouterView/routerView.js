@@ -8,7 +8,7 @@ function RouterView() {
   return (
     <div style={{
       position: 'relative',
-      top: '70px',
+      top: '64px',
       backgroundColor: "#18181B",
       height: "100vh",
       width: "100%",
