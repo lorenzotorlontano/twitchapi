@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getSuggestedHomeStreams } from '../../Service/Api/Api'
+import { getSuggestedHomeStreams, getChannel } from '../../Service/Api/Api'
 import ReactPlayer from "react-player"
 import { useStyles } from './styles';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +12,7 @@ export default function HomeSuggestedStreams() {
     const classes = useStyles();
 
     const [suggestedHomeStreams, setSuggestedStreams] = useState([])
+    const [suggestedHomeStreamsInfo, setSuggestedStreamsInfo] = useState([])
     const [showMore, setShowMore] = useState(false)
     const [buttonStatus, setButtonStatus] = useState(true)
 
@@ -30,6 +31,23 @@ export default function HomeSuggestedStreams() {
 
     console.log("Suggested Home Streams", suggestedHomeStreams)
 
+    useEffect(() => {
+        const getHomeSuggestedInfo = async () => {
+            const user_id = 36029255;  //attempt
+            const res = await getChannel(user_id)
+            setSuggestedStreamsInfo(res.data.data)
+        }
+        getHomeSuggestedInfo()
+    }, [])
+
+    console.log("Suggested Home Streams Info", suggestedHomeStreamsInfo)
+
+    const thumbnailFormatter = (url) => {
+        let formattedImg = url?.replace("{width}", "370");
+        let formattedImgFinal = formattedImg?.replace("{height}", "250");
+        return formattedImgFinal;
+    }
+
     return (
 
         <div className={classes.root} >
@@ -45,11 +63,12 @@ export default function HomeSuggestedStreams() {
                                                 width={"370px"}
                                                 height={"250px"}
                                                 url={`https://www.twitch.tv/${img.user_name.replace(/\s+/g, '')}`}
-                                                controls={true}
+                                                // controls={false}
+                                                light={`${thumbnailFormatter(img.thumbnail_url)}`}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <h1>Some text</h1>
+
                                         </Grid>
                                     </Grid>
                                 </CardContent>

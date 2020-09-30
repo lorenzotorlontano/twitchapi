@@ -61,3 +61,7 @@ export async function searchCategories(param) {
 export async function searchChannels(param) {
   return axiosInstance.get(`/search/channels?query=${param}`);
 }
+
+export async function getChannel(user_id) {
+  return axiosInstance.get(`/channels?broadcaster_id=${user_id}`);
+}

@@ -15,8 +15,8 @@ function Login() {
   };
 
   return (
-    <div style={{marginTop: '500px', textAlign: 'center'}}>
-      <h1 style={{}} onClick={handleCall}>LOGIN</h1>
+    <div style={{ marginTop: '500px', textAlign: 'center' }}>
+      <h1 style={{ color: "whitesmoke" }} onClick={handleCall}>LOGIN</h1>
     </div>
   );
 }
