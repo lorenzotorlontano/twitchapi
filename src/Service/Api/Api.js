@@ -35,6 +35,10 @@ export async function getSuggestedHomeStreams() {
   return axiosInstance.get(`/streams?first=6`);
 }
 
+export async function getSuggestedHomeStreamsCarousel() {
+  return axiosInstance.get(`/streams?first=20`);
+}
+
 export async function getVideos() {
   return axiosInstance.get(`/videos`);
 }

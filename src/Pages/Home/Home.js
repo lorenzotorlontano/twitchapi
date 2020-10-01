@@ -14,8 +14,8 @@ export default function Home() {
 
   return (
     <div>
-      <HomeSuggestedStreams />
       <HomeCarousel />
+      <HomeSuggestedStreams />
     </div>
 
   );
