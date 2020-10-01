@@ -1,33 +1,76 @@
 import React, { useEffect, useState, setState } from 'react';
+import AliceCarousel from 'react-alice-carousel'
+import 'react-alice-carousel/lib/alice-carousel.css'
+import ReactPlayer from "react-player"
+import { useStyles } from './styles';
+import { getSuggestedHomeStreamsCarousel } from '../../Service/Api/Api'
+
 
 export default function HomeCarousel() {
 
+    const classes = useStyles();
 
+    const [suggestedHomeStreams, setSuggestedStreams] = useState([])
+    const [randomTrio, setRandomTrio] = useState([])
+
+
+    useEffect(() => {
+        const getHomeSuggested = async () => {
+            const res = await getSuggestedHomeStreamsCarousel()
+            setSuggestedStreams(res.data.data)
+        }
+        getHomeSuggested()
+
+    }, [])
+
+    useEffect(() => {
+
+        let tempArray = []
+
+        let random_index1 = Math.floor(Math.random() * 20);
+        let random_index2 = Math.floor(Math.random() * 20);
+        let random_index3 = Math.floor(Math.random() * 20);
+
+        tempArray.push(suggestedHomeStreams[random_index1]);
+        tempArray.push(suggestedHomeStreams[random_index2]);
+        tempArray.push(suggestedHomeStreams[random_index3]);
+
+        setRandomTrio(tempArray)
+
+    }, [suggestedHomeStreams])
+
+    console.log("Suggested Home Streams", suggestedHomeStreams)
+    console.log("Suggestedrrrvebvrte", randomTrio)
+
+
+    const Gallery = () => {
+        const handleOnDragStart = (e) => e.preventDefault()
+        return (
+
+            <AliceCarousel
+                className={classes.aliceCarousel}
+                mouseTrackingEnabled>
+                { randomTrio && randomTrio.map((iterator) => {
+                    return (
+                        <div className={classes.carouselItem} >
+                            <ReactPlayer
+                                width={"370px"}
+                                height={"250px"}
+                                url={`https://www.twitch.tv/${iterator?.user_name.replace(/\s+/g, '')}`}
+                            />
+                        </div>
+                    )
+                })
+                }
+            </AliceCarousel>
+        )
+    }
 
     return (
         <div>
 
-            {/* <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="..." alt="First slide">
-                </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="..." alt="Second slide">
-                </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="..." alt="Third slide">
-                </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div> */}
+            <Gallery />
+
         </div>
     )
 }

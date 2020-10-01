@@ -35,6 +35,10 @@ export async function getSuggestedHomeStreams() {
   return axiosInstance.get(`/streams?first=6`);
 }
 
+export async function getSuggestedHomeStreamsCarousel() {
+  return axiosInstance.get(`/streams?first=20`);
+}
+
 export async function getVideos() {
   return axiosInstance.get(`/videos`);
 }
@@ -60,4 +64,8 @@ export async function searchCategories(param) {
 }
 export async function searchChannels(param) {
   return axiosInstance.get(`/search/channels?query=${param}`);
+}
+
+export async function getChannel(user_id) {
+  return axiosInstance.get(`/channels?broadcaster_id=${user_id}`);
 }
