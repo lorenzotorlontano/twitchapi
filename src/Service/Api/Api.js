@@ -69,3 +69,6 @@ export async function searchChannels(param) {
 export async function getChannel(user_id) {
   return axiosInstance.get(`/channels?broadcaster_id=${user_id}`);
 }
+export async function getUsersSearched(param) {
+  return axiosInstance.get(`/users/?login=${param}`);
+}

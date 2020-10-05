@@ -6,6 +6,20 @@
     outline-style: none;
 }
 
+.showMore{
+  background-color: transparent;
+  border: none;
+  color:#772ce8;
+  text-decoration: none;
+  outline-style: none;
+  align-self: center;
+  justify-content: center;
+  text-transform: capitalize;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 .showMoreButton:hover{
   text-decoration: underline;
 }

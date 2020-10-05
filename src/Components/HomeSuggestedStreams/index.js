@@ -29,7 +29,6 @@ export default function HomeSuggestedStreams() {
         setButtonStatus(false)
     }
 
-    console.log("Suggested Home Streams", suggestedHomeStreams)
 
     useEffect(() => {
         const getHomeSuggestedInfo = async () => {
