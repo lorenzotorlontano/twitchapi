@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme) => ({
 
     root: {
         textAlign: "center",
+        backgroundColor: "#18181B",
     },
 
     videoWrapper: {
@@ -19,7 +20,13 @@ export const useStyles = makeStyles((theme) => ({
 
     gridItem: {
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        transition: "244ms all",
+        "&:hover": {
+            marginLeft: "0 11px",
+            transform: "scale(1.1)",
+            cursor: "pointer"
+        }
     }
 
 }));
