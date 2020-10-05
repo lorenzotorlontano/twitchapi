@@ -46,23 +46,26 @@ export default function HomeCarousel() {
     const Gallery = () => {
         const handleOnDragStart = (e) => e.preventDefault()
         return (
-
-            <AliceCarousel
-                className={classes.aliceCarousel}
-                mouseTrackingEnabled>
-                { randomTrio && randomTrio.map((iterator) => {
-                    return (
-                        <div className={classes.carouselItem} >
-                            <ReactPlayer
-                                width={"370px"}
-                                height={"250px"}
-                                url={`https://www.twitch.tv/${iterator?.user_name.replace(/\s+/g, '')}`}
-                            />
-                        </div>
-                    )
-                })
-                }
-            </AliceCarousel>
+            <div className={classes.carouselRoot} >
+                <div className={classes.carouselWrapper} >
+                    <AliceCarousel
+                        className={classes.aliceCarousel}
+                        mouseTrackingEnabled>
+                        {randomTrio && randomTrio.map((iterator) => {
+                            return (
+                                <div className={classes.carouselItem} >
+                                    <ReactPlayer
+                                        width={"372px"}
+                                        height={"252px"}
+                                        url={`https://www.twitch.tv/${iterator?.user_name.replace(/\s+/g, '')}`}
+                                    />
+                                </div>
+                            )
+                        })
+                        }
+                    </AliceCarousel>
+                </div>
+            </div>
         )
     }
 

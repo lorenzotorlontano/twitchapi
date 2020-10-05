@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import VideoDetails from '../../Components/VideoDetails'
 
 export default function HomeSuggestedStreams() {
 
@@ -30,14 +31,21 @@ export default function HomeSuggestedStreams() {
     }
 
 
-    useEffect(() => {
-        const getHomeSuggestedInfo = async () => {
-            const user_id = 36029255;  //attempt
-            const res = await getChannel(user_id)
-            setSuggestedStreamsInfo(res.data.data)
-        }
-        getHomeSuggestedInfo()
-    }, [])
+    // useEffect(() => {
+    //     const getHomeSuggestedInfo = async () => {
+    //         let tempArrayUsersId = []
+    //         suggestedHomeStreams && suggestedHomeStreams.map((iterator) => {
+    //             tempArrayUsersId.push(iterator.user_id)
+    //         })
+
+    //         // let user_id = 36029255;
+    //         let user_id = suggestedHomeStreams.user_id;
+    //         // let res = await getChannel(user_id)
+    //         tempArray.push(res.data.data)
+    //         setSuggestedStreamsInfo(tempArray)
+    //     }
+    //     getHomeSuggestedInfo()
+    // }, [suggestedHomeStreams])
 
     console.log("Suggested Home Streams Info", suggestedHomeStreamsInfo)
 
@@ -54,7 +62,7 @@ export default function HomeSuggestedStreams() {
                 {suggestedHomeStreams && suggestedHomeStreams.map((img, index) => {
                     return (
                         <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper} >
-                            <Card style={{ width: "400px", display: index > 2 && !showMore ? "none" : "block" }} >
+                            <Card style={{ backgroundColor: "transparent", color: "whitesmoke", width: "400px", display: index > 2 && !showMore ? "none" : "block" }} >
                                 <CardContent>
                                     <Grid container>
                                         <Grid item xs={12} className={classes.gridItem}>
@@ -67,7 +75,7 @@ export default function HomeSuggestedStreams() {
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
-
+                                            <VideoDetails id={img.user_id} />
                                         </Grid>
                                     </Grid>
                                 </CardContent>

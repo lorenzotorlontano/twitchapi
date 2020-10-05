@@ -1,3 +1,4 @@
+import { colors } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import Image from '../../images/minimal-blur.jpg';
 
@@ -11,8 +12,25 @@ export const useStyles = makeStyles((theme) => ({
 
     },
 
+    carouselRoot: {
+        margin: "0 auto"
+        // display: "flex",
+        // justifyContent: "center"
+    },
+
+    carouselWrapper: {
+        margin: "0 auto",
+        maxHeight: "600px",
+        maxWidth: "406px",
+        display: "flex",
+        color: "whitesmoke",
+        borderRadius: "4px"
+    },
+
     aliceCarousel: {
-        height: "0px",
+        justifyContent: "center",
+        color: "whitesmoke"
+        // height: "0px",
     }
 
 }));
