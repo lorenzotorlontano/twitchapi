@@ -80,6 +80,6 @@ export async function getCurrentUserFollows() {
   return axiosInstance.get(`/users/follows?from_id=584434217`)
 }
 
-export async function getStreamsDetails(id) {
-  return axiosInstance.get(`/streams?user_id=${id}`);
+export async function getStreamsById(streamerId) {
+  return axiosInstance.get(`/streams?user_id=${streamerId}`);
 }
