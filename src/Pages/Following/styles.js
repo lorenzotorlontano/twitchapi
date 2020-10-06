@@ -2,11 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
 
-    // root: {
-    //     textAlign: "center",
-    //     backgroundColor: "#18181B",
-    //     overflowX: "hidden"
-    // },
+    root: {
+        textAlign: "center",
+        backgroundColor: "#18181B",
+        // overflowX: "hidden"
+    },
 
     // videoWrapper: {
     //     // marginTop: "20px"
