@@ -76,3 +76,7 @@ export async function getUsersSearched(param) {
 export async function getCurrentUserFollows() {
   return axiosInstance.get(`/users/follows?from_id=584434217`)
 }
+
+export async function getStreamsById(streamerId) {
+  return axiosInstance.get(`/streams?user_id=${streamerId}`);
+}
