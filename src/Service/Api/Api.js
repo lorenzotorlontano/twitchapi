@@ -72,3 +72,7 @@ export async function getChannel(user_id) {
 export async function getUsersSearched(param) {
   return axiosInstance.get(`/users/?login=${param}`);
 }
+
+export async function getCurrentUserFollows() {
+  return axiosInstance.get(`/users/follows?to_id=584434217`)
+}
