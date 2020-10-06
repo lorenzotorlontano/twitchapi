@@ -30,28 +30,11 @@ export default function HomeSuggestedStreams() {
         setButtonStatus(false)
     }
 
-
-    // useEffect(() => {
-    //     const getHomeSuggestedInfo = async () => {
-    //         let tempArrayUsersId = []
-    //         suggestedHomeStreams && suggestedHomeStreams.map((iterator) => {
-    //             tempArrayUsersId.push(iterator.user_id)
-    //         })
-
-    //         // let user_id = 36029255;
-    //         let user_id = suggestedHomeStreams.user_id;
-    //         // let res = await getChannel(user_id)
-    //         tempArray.push(res.data.data)
-    //         setSuggestedStreamsInfo(tempArray)
-    //     }
-    //     getHomeSuggestedInfo()
-    // }, [suggestedHomeStreams])
-
     console.log("Suggested Home Streams Info", suggestedHomeStreamsInfo)
 
     const thumbnailFormatter = (url) => {
-        let formattedImg = url?.replace("{width}", "370");
-        let formattedImgFinal = formattedImg?.replace("{height}", "250");
+        let formattedImg = url?.replace("{width}", "367");
+        let formattedImgFinal = formattedImg?.replace("{height}", "248");
         return formattedImgFinal;
     }
 
@@ -67,8 +50,8 @@ export default function HomeSuggestedStreams() {
                                     <Grid container>
                                         <Grid item xs={12} className={classes.gridItem}>
                                             <ReactPlayer
-                                                width={"370px"}
-                                                height={"250px"}
+                                                width={"367px"}
+                                                height={"248px"}
                                                 url={`https://www.twitch.tv/${img.user_name.replace(/\s+/g, '')}`}
                                                 // controls={false}
                                                 light={`${thumbnailFormatter(img.thumbnail_url)}`}
@@ -87,7 +70,7 @@ export default function HomeSuggestedStreams() {
 
             {buttonStatus ? (
                 <Button
-                    style={{ borderRadius: "6px", marginTop: "6px" }}
+                    style={{ borderRadius: "6px", marginTop: "6px", marginBottom: "12px" }}
                     onClick={() => handleClick()}
                     variant="contained">Show more
                 </Button>)

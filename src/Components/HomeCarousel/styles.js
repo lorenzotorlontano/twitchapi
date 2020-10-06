@@ -21,10 +21,10 @@ export const useStyles = makeStyles((theme) => ({
     carouselWrapper: {
         margin: "0 auto",
         maxHeight: "600px",
-        maxWidth: "406px",
+        maxWidth: "404px",
         display: "flex",
         color: "whitesmoke",
-        borderRadius: "4px"
+        // borderRadius: "4px"
     },
 
     aliceCarousel: {
