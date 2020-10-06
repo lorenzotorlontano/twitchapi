@@ -71,6 +71,7 @@ export async function searchChannels(param) {
 export async function getChannel(user_id) {
   return axiosInstance.get(`/channels?broadcaster_id=${user_id}`);
 }
+
 export async function getUsersSearched(param) {
   return axiosInstance.get(`/users/?login=${param}`);
 }
@@ -79,6 +80,6 @@ export async function getCurrentUserFollows() {
   return axiosInstance.get(`/users/follows?from_id=584434217`)
 }
 
-export async function getStremsKey() {
-  return axiosInstance.get(`/streams/key?broadcaster_id=584434217`)
+export async function getStreamsDetails(id) {
+  return axiosInstance.get(`/streams?user_id=${id}`);
 }

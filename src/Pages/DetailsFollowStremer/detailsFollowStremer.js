@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from 'react'
-import {getStremsKey} from '../../Service/Api/Api'
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams,
+} from "react-router-dom";
+import { getSuggestedHomeStreams, getChannel , getStreamsDetails } from '../../Service/Api/Api'
+
 
 function DetailsFollowStremer() {
+  const [streamsKey, setStreamsKey] = useState();
+  const [channel, setChannel] = useState();
+  const [streamsDetails, setStreamsDetails] = useState();
 
-    const [streamsKey, setStreamsKey] = useState()
+  const { id } = useParams();
 
-    useEffect(() => {
-        const resp = getStremsKey().then((re)=>{
-            setStreamsKey(re.data)
-            console.log('re.data',re.data)
-        })
-    }, [])
 
-    return (
-        <div>
-              
-        </div>
-    )
+  return <div></div>;
 }
 
-export default DetailsFollowStremer
+export default DetailsFollowStremer;

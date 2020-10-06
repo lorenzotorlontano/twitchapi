@@ -39,8 +39,6 @@ export default function HomeCarousel() {
 
     }, [suggestedHomeStreams])
 
-    console.log("Suggested Home Streams", suggestedHomeStreams)
-    console.log("Suggestedrrrvebvrte", randomTrio)
 
 
     const Gallery = () => {
