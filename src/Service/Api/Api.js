@@ -74,5 +74,5 @@ export async function getUsersSearched(param) {
 }
 
 export async function getCurrentUserFollows() {
-  return axiosInstance.get(`/users/follows?to_id=584434217`)
+  return axiosInstance.get(`/users/follows?from_id=584434217`)
 }
