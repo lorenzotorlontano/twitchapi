@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { getSuggestedHomeStreams, getChannel } from '../../Service/Api/Api'
+import { useStyles } from './styles';
 
 export default function VideoDetails({ id }) {
 
     const [videoInfo, setVideoInfo] = useState([])
+
+    const classes = useStyles();
 
     useEffect(() => {
         const getVideoInfo = async () => {

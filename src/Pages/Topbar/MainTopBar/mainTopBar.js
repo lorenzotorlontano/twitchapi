@@ -24,8 +24,14 @@ import Button from "@material-ui/core/Button";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import "../../Topbar/topbar.css";
 import { searchCategories } from "../../../Service/Api/Api";
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 
-function MainTopBar({ renderMenu, handleWrite  ,  switchDefault, switchStyle  , handleMobileMenuOpen   , border  , param  ,  searchCate , classes  ,useStyles   , color, me , menuId,  handleProfileMenuOpen , renderMobileMenu}) {
+function MainTopBar({ renderMenu, handleWrite, switchDefault, switchStyle, handleMobileMenuOpen, border, param, searchCate, classes, useStyles, color, me, menuId, handleProfileMenuOpen, renderMobileMenu }) {
+
+  const toFollowing = () => {
+    window.location.assign("/following")
+  }
+
   return (
     <>
       <AppBar style={{ backgroundColor: "#18181B" }} position="static">
@@ -45,8 +51,7 @@ function MainTopBar({ renderMenu, handleWrite  ,  switchDefault, switchStyle  , 
               className="iconTwitch"
               src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
             />
-
-            <div style={{ fontSize: "19px" }}>Seguito</div>
+            <div style={{ fontSize: "19px", cursor: "pointer" }} onClick={() => toFollowing()} >Seguito</div>
             <div style={{ fontSize: "19px" }}>Sfoglia</div>
             <div
               style={{ backgroundColor: "white", height: "40px", width: "1px" }}
@@ -124,8 +129,8 @@ function MainTopBar({ renderMenu, handleWrite  ,  switchDefault, switchStyle  , 
         </Toolbar>
       </AppBar>
 
-      {renderMobileMenu}
-      {renderMenu}
+      { renderMobileMenu}
+      { renderMenu}
     </>
   );
 }

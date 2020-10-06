@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: "center",
         backgroundColor: "#18181B",
+        // overflowX: "hidden"
     },
 
     videoWrapper: {
