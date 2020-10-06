@@ -2,6 +2,7 @@ import React from "react";
 import Login from "../../Pages/Login/Login";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
+import Hash from "../../Pages/Hash/hash"
 import DetailsSearched from '../../Pages/DetailsSearched/detailsSearched'
 import Following from '../../Pages/Following'
 
@@ -18,6 +19,9 @@ function RouterView() {
     }}>
       <Router>
         <Switch>
+        <Route path="/hash">
+            <Hash />
+          </Route>
           <Route path="/home">
             <Home />
           </Route>

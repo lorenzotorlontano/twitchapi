@@ -15,7 +15,7 @@ export default function Following() {
 
     return (
         <div className={classes.root} >
-
+            
         </div>
     )
 }
