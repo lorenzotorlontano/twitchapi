@@ -36,6 +36,7 @@ export default function Following() {
     });
   }, []);
 
+console.log('maledetto dio')
   const thumbnailFormatter = (url) => {
     let formattedImg = url?.replace("{width}", "367");
     let formattedImgFinal = formattedImg?.replace("{height}", "248");
