@@ -15,14 +15,15 @@ import ItemSearched from "../ItemSearched/itemSearched";
 import ButtonShowMore from '../ButtonShowMore/buttonShowMore'
 import ButtonShow from '../ButtonShow/buttonShow'
 
-function ButtonFollow({selectedIcon, handleSelection,selectedNotific, switchIcon, handleIcon, channels}) {
+function ButtonFollow({selectedIcon, handleSelection , selectedNotific, switchIcon, handleIcon, channels}) {
+  
   return (
     <>
       <div style={{ display: "flex" }}>
-        {selectedIcon.includes(channels.display_name) ? (
+        {selectedIcon.includes(channels) ? (
           <>
             <Button
-              onClick={() => switchIcon(channels.display_name)}
+              onClick={() => switchIcon(channels)}
               style={{
                 backgroundColor: "#464649",
                 marginRight: "10px",
@@ -34,7 +35,7 @@ function ButtonFollow({selectedIcon, handleSelection,selectedNotific, switchIcon
               <FavoriteIcon />
             </Button>
             <Button
-              onClick={() => handleIcon(channels.display_name)}
+              onClick={() => handleIcon(channels)}
               style={{
                 backgroundColor: "#464649",
                 marginRight: "10px",
@@ -43,7 +44,7 @@ function ButtonFollow({selectedIcon, handleSelection,selectedNotific, switchIcon
                 color: "white",
               }}
             >
-              {selectedNotific.includes(channels.display_name) ? (
+              {selectedNotific.includes(channels) ? (
                 <NotificationsOffOutlinedIcon />
               ) : (
                 <NotificationsIcon />
@@ -52,7 +53,8 @@ function ButtonFollow({selectedIcon, handleSelection,selectedNotific, switchIcon
           </>
         ) : (
           <Button
-            onClick={() => handleSelection(channels.display_name)}
+            onClick={() => handleSelection(channels)}
+
             style={{
               color: "white",
               backgroundColor: "#772CE8",
@@ -60,11 +62,12 @@ function ButtonFollow({selectedIcon, handleSelection,selectedNotific, switchIcon
               fontWeight: "bold",
             }}
           >
+            {console.log('channels', channels)}
             <FavoriteIcon style={{}} />
             Segui
           </Button>
         )}
-      </div>
+      </div> 
     </>
   );
 }

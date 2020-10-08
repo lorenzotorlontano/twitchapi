@@ -2,8 +2,12 @@ import React from "react";
 import Login from "../../Pages/Login/Login";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
+import Hash from "../../Pages/Hash/hash"
 import DetailsSearched from '../../Pages/DetailsSearched/detailsSearched'
 import Following from '../../Pages/Following'
+import DetailsFollowStremer from '../../Pages/DetailsFollowStremer/detailsFollowStremer'
+import DetailsChannel from '../../Pages/DetailsChannel/detailsChannel'
+
 
 function RouterView() {
   return (
@@ -18,6 +22,9 @@ function RouterView() {
     }}>
       <Router>
         <Switch>
+        <Route path="/hash">
+            <Hash />
+          </Route>
           <Route path="/home">
             <Home />
           </Route>
@@ -26,6 +33,12 @@ function RouterView() {
           </Route>
           <Route path="/detailsSearched/:id">
             <DetailsSearched />
+          </Route>
+          <Route path="/detailsFollowStremer/:id">
+            < DetailsFollowStremer/>
+          </Route>
+          <Route path="/detailsChannel/:id">
+            < DetailsChannel/>
           </Route>
           <Route path="/">
             <Login />

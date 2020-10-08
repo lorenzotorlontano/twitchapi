@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getCurrentUserFollows, getStreamsById } from "../../Service/Api/Api";
+import {
+  getCurrentUserFollows,
+  getStreamsById,
+  getChannel,
+  getUsers,
+} from "../../Service/Api/Api";
+
 import { useStyles } from "./styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -7,13 +13,18 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import VideoDetails from "../../Components/VideoDetails";
 import ReactPlayer from "react-player";
+import ImgChannel from "../Following/ImgChannel/imgChannel";
+import DetailsChannel from '../../Pages/DetailsChannel/detailsChannel'
+
 
 export default function Following() {
   const classes = useStyles();
 
   const [myFollows, setMyFollows] = useState([]);
-
-  const [videoThumbs, setVideoThumbs] = useState([]);
+  const [videoInfo, setVideoInfo] = useState([]);
+  const [usersDetails, setUsersDetails] = useState();
+  
+   const [videoThumbs, setVideoThumbs] = useState([]);
 
   useEffect(() => {
     const getMyFollows = async () => {
@@ -59,6 +70,41 @@ export default function Following() {
     return formattedImgFinal;
   };
 
+  useEffect(() => {
+    const getMyFollows = async () => {
+      const res = await getCurrentUserFollows();
+      setMyFollows(res.data.data);
+    };
+    getMyFollows();
+  }, []);
+
+  useEffect(() => {
+    const res = getUsers().then((re) => {
+      setUsersDetails(re.data.data[0]);
+    });
+  }, []);
+
+  const thumbnailFormatter = (url) => {
+    let formattedImg = url?.replace("{width}", "367");
+    let formattedImgFinal = formattedImg?.replace("{height}", "248");
+    return formattedImgFinal;
+  };
+
+  const browse = (id) => {
+    console.log(`cioa`);
+    const res = getChannel(id).then((re) => {
+      setVideoInfo(re.data.data[0].broadcaster_id);
+      window.location.assign(
+        `/detailsFollowStremer/${re.data.data[0].broadcaster_id}`
+      );
+    });
+  };
+
+  const handleBrowseToChannelDetails = (id) => {
+    window.location.assign(
+      `/detailsChannel/${id}`
+    );
+  }
   return (
     <div className={classes.root}>
       <Grid container spacing={1} className={classes.videoWrapper}>
@@ -71,7 +117,9 @@ export default function Following() {
                     backgroundColor: "transparent",
                     color: "whitesmoke",
                     width: "400px",
+
                     // display: index > 2 && !showMore ? "none" : "block"
+
                   }}
                 >
                   <CardContent>
@@ -80,6 +128,7 @@ export default function Following() {
                         <ReactPlayer
                           width={"367px"}
                           height={"248px"}
+
                           url={`https://www.twitch.tv/${iterator.to_name.replace(
                             /\s+/g,
                             ""

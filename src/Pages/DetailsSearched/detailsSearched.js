@@ -47,7 +47,6 @@ function DetailsSearched() {
 
   const handleIcon = (name) => {
     let st;
-    console.log("lorenzo", st);
     if (selectedNotific.includes(name)) {
       const strSplit = selectedNotific.replace(`${name}&`, "");
       setSelectedNotific(strSplit);
@@ -58,8 +57,11 @@ function DetailsSearched() {
   };
 
   const handleSelection = (name) => {
+    console.log('name', name)
     let str = selectedIcon.concat(name, "&");
     setSelectedIcon(str);
+    console.log('selectedIcon', selectedIcon)
+
   };
 
   const showMore = () => {
@@ -86,6 +88,7 @@ function DetailsSearched() {
         color: "white",
       }}
     >
+  
       <MainDetailsSearched
         showAll={showAll}
         showMore={showMore}
@@ -93,7 +96,7 @@ function DetailsSearched() {
         handleIcon={handleIcon}
         switchIcon={switchIcon}
         channels={channels}
-        selectedIcon={selectedIcon}
+        selectedIcon={ selectedIcon}
         selectedNotific={selectedNotific}
         categories={categories}
         all={all}

@@ -107,10 +107,8 @@ function MainDetailsSearched({
                           selectedNotific={selectedNotific}
                           switchIcon={switchIcon}
                           handleIcon={handleIcon}
-                          channels={channels}
+                          channels={va.display_name}
                         />
-
-
                       </div>
                     </Grid>
                   </Grid>
