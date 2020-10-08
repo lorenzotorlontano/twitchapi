@@ -6,6 +6,9 @@ import Hash from "../../Pages/Hash/hash"
 import DetailsSearched from '../../Pages/DetailsSearched/detailsSearched'
 import Following from '../../Pages/Following'
 import DetailsFollowStremer from '../../Pages/DetailsFollowStremer/detailsFollowStremer'
+import DetailsChannel from '../../Pages/DetailsChannel/detailsChannel'
+
+
 function RouterView() {
   return (
     <div style={{
@@ -33,6 +36,9 @@ function RouterView() {
           </Route>
           <Route path="/detailsFollowStremer/:id">
             < DetailsFollowStremer/>
+          </Route>
+          <Route path="/detailsChannel/:id">
+            < DetailsChannel/>
           </Route>
           <Route path="/">
             <Login />

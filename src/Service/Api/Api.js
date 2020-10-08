@@ -2,16 +2,6 @@ import Axios from "axios";
 
 const token = localStorage.getItem("token");
 
-/* const bracketsToken = localStorage.getItem("token");
-
-let strArrayToken;
-let token;
-
-if (bracketsToken !== null) {
-  strArrayToken = bracketsToken.split('"');
-  token = strArrayToken[1];
-} */
-
 
 const axiosInstance = Axios.create({
   baseURL: "https://api.twitch.tv/helix",
@@ -80,6 +70,6 @@ export async function getCurrentUserFollows() {
   return axiosInstance.get(`/users/follows?from_id=584434217`)
 }
 
-export async function getStreamsById(streamerId) {
-  return axiosInstance.get(`/streams?user_id=${streamerId}`);
+export async function getStreamsById(id) {
+  return axiosInstance.get(`/streams?user_id=${id}`);
 }

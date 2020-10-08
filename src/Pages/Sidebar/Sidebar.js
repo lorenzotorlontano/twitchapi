@@ -163,7 +163,6 @@ export default function MiniDrawer({ streams, currentUrl }) {
   };
 
   const handleUserIcon = (name) => {
-    console.log("name", name);
     let str = overUserIcon.concat(name, "&");
     setOverUserIcon(str);
   };

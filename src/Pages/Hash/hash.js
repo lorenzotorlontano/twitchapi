@@ -7,7 +7,6 @@ function Hash() {
 
   useEffect(() => {
     const accessTokenArr = location.hash.split("=");
-    console.log(accessTokenArr[1]);
     const accessTokenArrReal = accessTokenArr[1].split("&");
     const accessToken = accessTokenArrReal[0];
     localStorage.setItem("token", accessToken);
