@@ -11,8 +11,16 @@ import Button from "@material-ui/core/Button";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NotificationsOffOutlinedIcon from "@material-ui/icons/NotificationsOffOutlined";
-
-function ItemSearched({channels, all , selectedIcon  , handleIcon  , selectedNotific , handleSelection  , switchIcon  }) {
+import ButtonFollow from "../ButtonFollow/buttonFollow";
+function ItemSearched({
+  channels,
+  all,
+  selectedIcon,
+  handleIcon,
+  selectedNotific,
+  handleSelection,
+  switchIcon,
+}) {
   return (
     <>
       {channels &&
@@ -58,53 +66,14 @@ function ItemSearched({channels, all , selectedIcon  , handleIcon  , selectedNot
                       {val.display_name}
                     </span>
 
-                    <div style={{ display: "flex" }}>
-                      {selectedIcon.includes(val.display_name) ? (
-                        <>
-                          <Button
-                            onClick={() => switchIcon(val.display_name)}
-                            style={{
-                              backgroundColor: "#464649",
-                              marginRight: "10px",
-                              width: "25px",
-                              height: "30px",
-                              color: "white",
-                            }}
-                          >
-                            <FavoriteIcon />
-                          </Button>
-                          <Button
-                            onClick={() => handleIcon(val.display_name)}
-                            style={{
-                              backgroundColor: "#464649",
-                              marginRight: "10px",
-                              width: "25px",
-                              height: "30px",
-                              color: "white",
-                            }}
-                          >
-                            {selectedNotific.includes(val.display_name) ? (
-                              <NotificationsOffOutlinedIcon />
-                            ) : (
-                              <NotificationsIcon />
-                            )}
-                          </Button>
-                        </>
-                      ) : (
-                        <Button
-                          onClick={() => handleSelection(val.display_name)}
-                          style={{
-                            color: "white",
-                            backgroundColor: "#772CE8",
-                            textTransform: "capitalize",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          <FavoriteIcon style={{}} />
-                          Segui
-                        </Button>
-                      )}
-                    </div>
+                    <ButtonFollow
+                      selectedIcon={selectedIcon && selectedIcon}
+                      handleSelection={handleSelection}
+                      selectedNotific={selectedNotific}
+                      switchIcon={switchIcon}
+                      handleIcon={handleIcon}
+                      channels={val.display_name}
+                    />
                   </div>
                 </Grid>
               </Grid>

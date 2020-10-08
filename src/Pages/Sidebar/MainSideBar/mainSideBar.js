@@ -192,7 +192,6 @@ function MainSideBar({ firstValue, i , j , handleHideUserIcon , handleUserIcon ,
               >
                 RISULTATI
               </div>
-              {console.log("fhbhsfbs", users)}
               {users &&
                 users.map((val, index) => {
                   if (index > 10) {

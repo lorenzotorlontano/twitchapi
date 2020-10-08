@@ -30,7 +30,6 @@ export default function HomeSuggestedStreams() {
         setButtonStatus(false)
     }
 
-    console.log("Suggested Home Streams Info", suggestedHomeStreamsInfo)
 
     const thumbnailFormatter = (url) => {
         let formattedImg = url?.replace("{width}", "367");
