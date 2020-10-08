@@ -14,8 +14,7 @@ import Button from "@material-ui/core/Button";
 import VideoDetails from "../../Components/VideoDetails";
 import ReactPlayer from "react-player";
 import ImgChannel from "../Following/ImgChannel/imgChannel";
-import DetailsChannel from '../../Pages/DetailsChannel/detailsChannel'
-
+import DetailsChannel from "../../Pages/DetailsChannel/detailsChannel";
 
 export default function Following() {
   const classes = useStyles();
@@ -23,8 +22,8 @@ export default function Following() {
   const [myFollows, setMyFollows] = useState([]);
   const [videoInfo, setVideoInfo] = useState([]);
   const [usersDetails, setUsersDetails] = useState();
-  
-   const [videoThumbs, setVideoThumbs] = useState([]);
+
+  const [videoThumbs, setVideoThumbs] = useState([]);
 
   useEffect(() => {
     const getMyFollows = async () => {
@@ -84,12 +83,6 @@ export default function Following() {
     });
   }, []);
 
-  const thumbnailFormatter = (url) => {
-    let formattedImg = url?.replace("{width}", "367");
-    let formattedImgFinal = formattedImg?.replace("{height}", "248");
-    return formattedImgFinal;
-  };
-
   const browse = (id) => {
     console.log(`cioa`);
     const res = getChannel(id).then((re) => {
@@ -101,10 +94,8 @@ export default function Following() {
   };
 
   const handleBrowseToChannelDetails = (id) => {
-    window.location.assign(
-      `/detailsChannel/${id}`
-    );
-  }
+    window.location.assign(`/detailsChannel/${id}`);
+  };
   return (
     <div className={classes.root}>
       <Grid container spacing={1} className={classes.videoWrapper}>
@@ -119,7 +110,6 @@ export default function Following() {
                     width: "400px",
 
                     // display: index > 2 && !showMore ? "none" : "block"
-
                   }}
                 >
                   <CardContent>
@@ -128,7 +118,6 @@ export default function Following() {
                         <ReactPlayer
                           width={"367px"}
                           height={"248px"}
-
                           url={`https://www.twitch.tv/${iterator.to_name.replace(
                             /\s+/g,
                             ""
