@@ -63,7 +63,8 @@ export default function Following() {
       <Grid container spacing={1} className={classes.videoWrapper}>
         {myFollows &&
           myFollows.map((img, index) => {
-            return (
+            return ( 
+                   
               <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper}>
                 <Card
                   style={{
