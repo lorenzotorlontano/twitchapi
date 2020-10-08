@@ -1,0 +1,7 @@
+.iconTwitch:hover{
+    width: 30px;
+}
+.iconTwitch{
+    width: 25px;
+    transition: 1s;
+}
