@@ -61,14 +61,11 @@ export default function Following() {
           (res) => res.data.data[0]?.thumbnail_url
         );
         setVideoThumbs(thumbsImages);
-        console.log("thumbs", thumbsImages);
-        console.log("my followsss", myFollows);
       });
     }
   }, [myFollows]);
 
   const browse = (id) => {
-    console.log(`cioa`);
     const res = getChannel(id).then((re) => {
       setVideoInfo(re.data.data[0].broadcaster_id);
       window.location.assign(
