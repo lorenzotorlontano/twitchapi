@@ -30,7 +30,6 @@ function ItemOne({ id }) {
   useEffect(() => {
     const r = getSuggestedHomeStreams().then((re) => {
       setSuggestedStreams(re.data.data[0]);
-      console.log("re", re.data.data);
     });
   }, []);
 

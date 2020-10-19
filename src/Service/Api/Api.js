@@ -81,3 +81,7 @@ export async function getVideosById(id) {
 export async function getClips(id) {
   return axiosInstance.get(`/clips?broadcaster_id=${id}`);
 }
+
+export async function getVideosByType(views, id) {
+  return axiosInstance.get(`/videos?user_id=${id}&type=${views}`);
+}

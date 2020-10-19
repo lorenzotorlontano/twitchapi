@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectFilter() {
+export default function SelectFilter({ filterCall, views }) {
   const classes = useStyles();
 
   return (
@@ -25,33 +25,35 @@ export default function SelectFilter() {
         className={classes.formControl}
       >
         <Select
+          onChange={filterCall}
           style={{ color: "white", backgroundColor: "#3E3E40" }}
           native
           defaultValue=""
+          value={views}
           id="grouped-native-select"
         >
-          <option style={{ backgroundColor: "#333", color: "white" }} value={0}>
+          <option
+            style={{ backgroundColor: "#333", color: "white" }}
+            value={"highlight"}
+          >
             In primo piano
           </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={1}>
-            Trasmissioni precedenti
-          </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={2}>
-            In Evidenza
-          </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={3}>
-            Clip
-          </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={4}>
+          <option
+            style={{ backgroundColor: "#333", color: "white" }}
+            value={"upload"}
+          >
             Caricamenti
           </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={5}>
-            Antemprime precendenti
-          </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={6}>
+          <option
+            style={{ backgroundColor: "#333", color: "white" }}
+            value={"archive"}
+          >
             Raccolte
           </option>
-          <option style={{ backgroundColor: "#333", color: "white" }} value={7}>
+          <option
+            style={{ backgroundColor: "#333", color: "white" }}
+            value={"all"}
+          >
             Tutti i video
           </option>
         </Select>
