@@ -13,7 +13,6 @@ import {
   getChannel,
   getStreamsDetails,
   getUsers,
-  getCurrentUserFollows,
 } from "../../Service/Api/Api";
 import ReactPlayer from "react-player";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
@@ -21,6 +20,7 @@ import Grid from "@material-ui/core/Grid";
 import ButtonFollow from "../DetailsSearched/ButtonFollow/buttonFollow";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ButtonLive from "../../Components/ButtonLive/buttonLive";
+import TabsFullScreen from "../../Components/TabsFullScreenView/tabsFullScreen";
 
 function DetailsFollowStremer() {
   const [streamsKey, setStreamsKey] = useState();
@@ -30,26 +30,12 @@ function DetailsFollowStremer() {
   const [selectedIcon, setSelectedIcon] = useState("");
   const [selectedNotific, setSelectedNotific] = useState("");
 
-  const [streamWidth, setStreamWidth] = useState("956.2px");
-  const [control, setControl] = useState(false);
-  const [myFollows, setMyFollows] = useState([]);
-
-  const [streamHeight, setStreamHeight] = useState("537.86px");
-
   const { id } = useParams();
 
   useEffect(() => {
     const resp = getStreamsById(id).then((re) => {
       setStreamsDetails(re.data.data[0]);
     });
-  }, []);
-
-  useEffect(() => {
-    const getMyFollows = async () => {
-      const res = await getCurrentUserFollows();
-      setMyFollows(res.data.data);
-    };
-    getMyFollows();
   }, []);
 
   useEffect(() => {
@@ -85,16 +71,16 @@ function DetailsFollowStremer() {
     }
   };
 
-  const browseToFullScreenView = (id) => {
-    window.location.assign(`/fullScreenStreamView/${id}`);
+  const handleBrowseToChannelDetails = (id) => {
+    window.location.assign(`/detailsFollowStremer/${id}`);
   };
 
   return (
     <Grid
       style={{
         display: "flex",
-        width: "70%",
-        height: "537px",
+        width: "100%",
+        height: "80%",
         color: "white",
         alignSelf: "center",
       }}
@@ -110,55 +96,81 @@ function DetailsFollowStremer() {
           )}`}
         />
       </div>
-      <Grid item md={6} style={{ display: "flex" }}>
-        <div
-          onClick={() => browseToFullScreenView(id)}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            flexDirection: "column",
-          }}
-        >
-          <div style={{}}>
-            <img
-              style={{ width: "64px", height: "64px", borderRadius: "50%" }}
-              src={usersDetails && usersDetails.profile_image_url}
-            />
+      <Grid style={{ width: "100%", backgroundColor: "#0E0E10" }} container>
+        <Grid item md={6} style={{ display: "flex" }}>
+          <div
+            onClick={() => handleBrowseToChannelDetails(id)}
+            style={{
+              display: "flex",
+              cursor: "pointer",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ margin: "20px" }}>
+              <img
+                style={{ width: "64px", height: "64px", borderRadius: "50%" }}
+                src={usersDetails && usersDetails.profile_image_url}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignSelf: "center",
+                position: "absolute",
+                paddingTop: "70px",
+              }}
+            >
+              <ButtonLive id={id} />
+            </div>
           </div>
           <div
             style={{
               display: "flex",
               alignSelf: "center",
-              position: "absolute",
-              paddingTop: "50px",
+              fontSize: "20px",
+              fontWeight: "bold",
             }}
           >
-            <ButtonLive id={id} />
+            <div style={{ display: "flex" }}>
+              <span>{streamsDetails && streamsDetails.user_name}</span>{" "}
+              <VerifiedUserIcon
+                style={{ color: "#9147FF", marginLeft: "10px" }}
+              />
+            </div>
           </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex" }}>
-            <span>{streamsDetails && streamsDetails.user_name}</span>{" "}
-            <VerifiedUserIcon />
-          </div>
-          <span>{streamsDetails && streamsDetails.title}</span>
-          <div style={{ display: "flex" }}>
-            <Link>Quattro chiacchiere</Link>
-            <span>{streamsDetails && streamsDetails.language}</span>
-          </div>
-        </div>
-      </Grid>
+        </Grid>
 
-      <Grid style={{ display: "flex", justifyContent: "flex-end" }} item md={6}>
-        <div>
-          <ButtonFollow
-            selectedIcon={selectedIcon}
-            handleSelection={handleSelection}
-            selectedNotific={selectedNotific}
-            switchIcon={switchIcon}
-            handleIcon={handleIcon}
-            channels={streamsDetails && streamsDetails.user_name}
-          />
+        <Grid
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignSelf: "center",
+          }}
+          item
+          md={6}
+        >
+          <div>
+            <ButtonFollow
+              selectedIcon={selectedIcon}
+              handleSelection={handleSelection}
+              selectedNotific={selectedNotific}
+              switchIcon={switchIcon}
+              handleIcon={handleIcon}
+              channels={streamsDetails && streamsDetails.user_name}
+            />
+          </div>
+          <div style={{ display: "flex", alignSelf: "center" }}>
+            <MoreIcon />
+          </div>
+        </Grid>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <TabsFullScreen id={id} />
         </div>
       </Grid>
     </Grid>

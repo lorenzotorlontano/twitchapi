@@ -2,17 +2,17 @@ import Axios from "axios";
 
 const token = localStorage.getItem("token");
 
-
 const axiosInstance = Axios.create({
   baseURL: "https://api.twitch.tv/helix",
   headers: {
-    Authorization: "Bearer " +token,
+    Authorization: "Bearer " + token,
     "client-Id": "8uv5uigx4woona52bd4104ev464565",
   },
 });
 
 const secondInstance = Axios.create({
-  baseURL: "https://id.twitch.tv/oauth2/token?client_id=8uv5uigx4woona52bd4104ev464565&client_secret=wylnlq7zqrnq4fwtpm757y6wbtirlc&grant_type=client_credentials",
+  baseURL:
+    "https://id.twitch.tv/oauth2/token?client_id=8uv5uigx4woona52bd4104ev464565&client_secret=wylnlq7zqrnq4fwtpm757y6wbtirlc&grant_type=client_credentials",
 });
 
 export async function getGames() {
@@ -67,9 +67,17 @@ export async function getUsersSearched(param) {
 }
 
 export async function getCurrentUserFollows() {
-  return axiosInstance.get(`/users/follows?from_id=584434217`)
+  return axiosInstance.get(`/users/follows?from_id=584434217`);
 }
 
 export async function getStreamsById(id) {
   return axiosInstance.get(`/streams?user_id=${id}`);
+}
+
+export async function getVideosById(id) {
+  return axiosInstance.get(`/videos?user_id=${id}`);
+}
+
+export async function getClips(id) {
+  return axiosInstance.get(`/clips?broadcaster_id=${id}`);
 }

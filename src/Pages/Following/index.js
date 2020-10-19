@@ -75,11 +75,10 @@ export default function Following() {
   };
 
   const handleBrowseToChannelDetails = (id) => {
-    window.location.assign(`/detailsChannel/${id}`);
+    window.location.assign(`/fullScreenStreamView/${id}`);
   };
 
   const thumbnailFormatter = (url) => {
-    console.log("Munch url", url);
     let formattedImg = url?.replace("{width}", "367");
     let formattedImgFinal = formattedImg?.replace("{height}", "248");
     return formattedImgFinal;
