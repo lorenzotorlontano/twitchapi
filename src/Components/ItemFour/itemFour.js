@@ -11,17 +11,12 @@ import ReactPlayer from "react-player";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SelectFilter from "../../Components/SelectFilter/selectFilter";
 import Button from "@material-ui/core/Button";
-
+import SecondSelectFilter from "../../Components/SelectFilter/secondSelectFilter";
 function ItemFour({ id }) {
   const [clips, setClips] = useState();
   const [views, setViews] = useState("highlight");
   const [videos, setVideos] = useState();
-
-  useEffect(() => {
-    const re = getClips(id).then((re) => {
-      setClips(re.data.data);
-    });
-  }, []);
+  const [secondViews, setSecondViews] = useState("time");
 
   const browseToStream = (id) => {
     window.location.assign(`/detailsFollowStremer/${id}`);
@@ -31,6 +26,10 @@ function ItemFour({ id }) {
     setViews(event.target.value);
   };
 
+  const secondFilterCall = (event) => {
+    setSecondViews(event.target.value);
+  };
+
   const thumbnailFormatter = (url) => {
     let formattedImg = url?.replace("{width}", "367");
     let formattedImgFinal = formattedImg?.replace("{height}", "248");
@@ -38,12 +37,19 @@ function ItemFour({ id }) {
   };
 
   useEffect(() => {
-    const r = getVideosByType(views, id).then((re) => {
-      setVideos(re.data.data);
-    });
-  }, [views]);
+    setVideos(null);
+    if (views !== "clips") {
+      const r = getVideosByType(views, id, secondViews).then((re) => {
+        setVideos(re.data.data);
+      });
+    } else {
+      const re = getClips(id).then((re) => {
+        setClips(re.data.data);
+      });
+    }
+  }, [views, secondViews]);
 
-  console.log("videos", videos && videos);
+  console.log("porco dio", clips);
 
   return (
     <Grid style={{ justifyContent: "center", alignSelf: "center" }} container>
@@ -55,6 +61,14 @@ function ItemFour({ id }) {
         <div style={{ display: "flex", alignSelf: "center" }}>Filtra per</div>
         <div style={{ display: "flex", alignSelf: "center" }}>
           <SelectFilter filterCall={filterCall} views={views} />
+          {views === "all" ? (
+            <div style={{ alignSelf: "center" }}>
+              <SecondSelectFilter
+                secondFilterCall={secondFilterCall}
+                secondViews={secondViews}
+              />
+            </div>
+          ) : null}
         </div>
       </Grid>
       {views === "highlight" ? (
@@ -68,28 +82,48 @@ function ItemFour({ id }) {
           </Button>
         </Grid>
       ) : null}
-      {videos &&
-        videos.map((val, index) => {
-          return (
-            <Grid item md={4}>
-              <ReactPlayer
-                width={"382px"}
-                height={"214px"}
-                url={`https://www.twitch.tv/${val.url.replace(/\s+/g, "")}`}
-              />
-              <div
-                onClick={() => browseToStream(id)}
-                style={{ display: "flex", cursor: "pointer" }}
-              >
-                <div style={{ width: "40px", height: "56px" }}>
-                  <img src={thumbnailFormatter(val.thumbnail_url)} />
-                </div>
-
-                <div>{val.creator_name}</div>
-              </div>
-            </Grid>
-          );
-        })}
+      {videos && views !== "clips"
+        ? videos.map((val, index) => {
+            if (index < 6) {
+              return (
+                <Grid item md={4}>
+                  <ReactPlayer
+                    width={"382px"}
+                    height={"214px"}
+                    url={`https://www.twitch.tv/${val.url.replace(/\s+/g, "")}`}
+                  />
+                  <div
+                    onClick={() => browseToStream(id)}
+                    style={{ display: "flex", cursor: "pointer" }}
+                  >
+                    <div>{val.creator_name}</div>
+                  </div>
+                </Grid>
+              );
+            } else {
+              return null;
+            }
+          })
+        : clips &&
+          clips.map((va, i) => {
+            if (i < 5) {
+              return (
+                <Grid item md={4}>
+                  <ReactPlayer
+                    width={"382px"}
+                    height={"214px"}
+                    url={`https://www.twitch.tv/${va.url.replace(/\s+/g, "")}`}
+                  />
+                  <div
+                    onClick={() => browseToStream(id)}
+                    style={{ display: "flex", cursor: "pointer" }}
+                  >
+                    <div>{va.creator_name}</div>
+                  </div>
+                </Grid>
+              );
+            }
+          })}
     </Grid>
   );
 }

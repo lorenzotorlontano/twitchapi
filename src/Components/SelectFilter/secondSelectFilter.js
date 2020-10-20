@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectFilter({ filterCall, views }) {
+export default function SelectFilter({ secondFilterCall, secondViews }) {
   const classes = useStyles();
 
   return (
@@ -25,42 +25,24 @@ export default function SelectFilter({ filterCall, views }) {
         className={classes.formControl}
       >
         <Select
-          onChange={filterCall}
+          onChange={secondFilterCall}
           style={{ color: "white", backgroundColor: "#3E3E40" }}
           native
           defaultValue=""
-          value={views}
+          value={secondViews}
           id="grouped-native-select"
         >
           <option
             style={{ backgroundColor: "#333", color: "white" }}
-            value={"highlight"}
+            value={"time"}
           >
-            In primo piano
+            Data
           </option>
           <option
             style={{ backgroundColor: "#333", color: "white" }}
-            value={"upload"}
+            value={"views"}
           >
-            Caricamenti
-          </option>
-          <option
-            style={{ backgroundColor: "#333", color: "white" }}
-            value={"archive"}
-          >
-            Raccolte
-          </option>
-          <option
-            style={{ backgroundColor: "#333", color: "white" }}
-            value={"all"}
-          >
-            Tutti i video
-          </option>
-          <option
-            style={{ backgroundColor: "#333", color: "white" }}
-            value={"clips"}
-          >
-            clips
+            Popolari
           </option>
         </Select>
       </FormControl>
