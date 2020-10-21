@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, setState } from "react";
 import {
   getCurrentUserFollows,
   getStreamsById,
@@ -12,13 +12,10 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import VideoDetails from "../../Components/VideoDetails";
 import ReactPlayer from "react-player";
-import ImgChannel from "../Following/ImgChannel/imgChannel";
+import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
 import { Link, NavLink } from "react-router-dom";
-import FollowingNavigation from "../../Components/FollowingNavigation";
-import { useHistory, useLocation } from "react-router-dom";
 
-export default function Following() {
-
+export default function FollowingPage() {
   const classes = useStyles();
 
   const [myFollows, setMyFollows] = useState([]);
@@ -27,6 +24,8 @@ export default function Following() {
 
   const [videoInfo, setVideoInfo] = useState([]);
   const [usersDetails, setUsersDetails] = useState();
+
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const getMyFollows = async () => {
@@ -41,7 +40,7 @@ export default function Following() {
     setVideoThumbs(res.data.data);
     let thumbUrl = videoThumbs[0]?.thumbnail_url;
     if (thumbUrl !== undefined) {
-      console.log("ijnsdincrec", thumbUrl);
+      console.log({ thumbUrl });
     }
     // return (
     //     thumbUrl
@@ -65,11 +64,14 @@ export default function Following() {
           (res) => res.data.data[0]?.thumbnail_url
         );
         setVideoThumbs(thumbsImages);
+        console.log("thumbs", thumbsImages);
+        console.log("my followsss", myFollows);
       });
     }
   }, [myFollows]);
 
   const browse = (id) => {
+    console.log(`cioa`);
     const res = getChannel(id).then((re) => {
       setVideoInfo(re.data.data[0].broadcaster_id);
       window.location.assign(
@@ -83,6 +85,7 @@ export default function Following() {
   };
 
   const thumbnailFormatter = (url) => {
+    console.log("Munch url", url);
     let formattedImg = url?.replace("{width}", "367");
     let formattedImgFinal = formattedImg?.replace("{height}", "248");
     return formattedImgFinal;
@@ -90,7 +93,51 @@ export default function Following() {
 
   return (
     <div>
-      <FollowingNavigation />
+      <Grid container spacing={1} className={classes.videoWrapper}>
+        {myFollows &&
+          myFollows.map((iterator, index) => {
+            return videoThumbs[index] === undefined ? null : (
+              <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper}>
+                <Card
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "whitesmoke",
+                    width: "400px",
+                    // display: index > 2 && !showMore ? "none" : "block",
+                  }}
+                >
+                  <CardContent>
+                    <Grid container>
+                      <Grid item xs={12} className={classes.gridItem}>
+                        <ReactPlayer
+                          width={"367px"}
+                          height={"248px"}
+                          url={`https://www.twitch.tv/${iterator.to_name.replace(
+                            /\s+/g,
+                            ""
+                          )}`}
+                          light={`${thumbnailFormatter(videoThumbs[index])}`}
+                        />
+                      </Grid>
+                      <Grid style={{ display: `flex` }} item xs={12}>
+                        <div
+                          onClick={() =>
+                            handleBrowseToChannelDetails(iterator.to_id)
+                          }
+                        >
+                          <ImgChannel id={iterator.to_id} />
+                        </div>
+                        <div onClick={() => browse(iterator.to_id)}>
+                          <VideoDetails id={iterator.to_id} />
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
+      </Grid>
     </div>
   );
 }

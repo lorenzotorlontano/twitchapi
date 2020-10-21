@@ -6,7 +6,6 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#18181B",
     // overflowX: "hidden"
   },
-
   followingCategories: {
     color: "whitesmoke",
   },
@@ -26,25 +25,14 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "12px",
     fontSize: "large",
   },
-
-  // videoWrapper: {
-  //     // marginTop: "20px"
-  // },
-
-  // gridWrapper: {
-  //     display: "flex",
-  //     justifyContent: "center",
-
-  // },
-
-  // gridItem: {
-  //     display: "flex",
-  //     justifyContent: "center",
-  //     transition: "244ms all",
-  //     "&:hover": {
-  //         marginLeft: "0 11px",
-  //         transform: "scale(1.1)",
-  //         cursor: "pointer"
-  //     }
-  // }
+  menuTabsRoot: {
+    marginBottom: "12px",
+    marginTop: "12px",
+    backgroundColor: "transparent",
+  },
+  menuTab: {
+    color: "whitesmoke",
+    maxWidth: "69px",
+    maxHeight: "44px",
+  },
 }));
