@@ -9,6 +9,7 @@ import DetailsFollowStremer from "../../Pages/DetailsFollowStremer/detailsFollow
 import HomeCarousel from "../HomeCarousel";
 import FollowingNavigation from "../FollowingNavigation";
 import FullScreenStreamView from "../../Pages/FullScreenStreamView/fullScreenStreamView";
+import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
 
 function RouterView() {
   return (
@@ -31,11 +32,9 @@ function RouterView() {
           <Route path="/home">
             <Home />
           </Route>
-
-          <Route exact path="/following">
+          <Route path="/following/">
             <Following />
           </Route>
-
           <Route path="/detailsSearched/:id">
             <DetailsSearched />
           </Route>
