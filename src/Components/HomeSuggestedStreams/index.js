@@ -35,7 +35,9 @@ export default function HomeSuggestedStreams() {
     return formattedImgFinal;
   };
 
-  console.log("prova");
+  {
+    console.log("dio cane");
+  }
 
   return (
     <div className={classes.root}>
