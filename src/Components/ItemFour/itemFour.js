@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SelectFilter from "../../Components/SelectFilter/selectFilter";
 import Button from "@material-ui/core/Button";
 import SecondSelectFilter from "../../Components/SelectFilter/secondSelectFilter";
+
 function ItemFour({ id }) {
   const [clips, setClips] = useState();
   const [views, setViews] = useState("highlight");
@@ -48,8 +49,6 @@ function ItemFour({ id }) {
       });
     }
   }, [views, secondViews]);
-
-  console.log("porco dio", clips);
 
   return (
     <Grid style={{ justifyContent: "center", alignSelf: "center" }} container>
