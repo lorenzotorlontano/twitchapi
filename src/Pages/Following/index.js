@@ -13,8 +13,12 @@ import Button from "@material-ui/core/Button";
 import VideoDetails from "../../Components/VideoDetails";
 import ReactPlayer from "react-player";
 import ImgChannel from "../Following/ImgChannel/imgChannel";
+import { Link, NavLink } from "react-router-dom";
+import FollowingNavigation from "../../Components/FollowingNavigation";
+import { useHistory, useLocation } from "react-router-dom";
 
 export default function Following() {
+
   const classes = useStyles();
 
   const [myFollows, setMyFollows] = useState([]);
@@ -85,52 +89,8 @@ export default function Following() {
   };
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={1} className={classes.videoWrapper}>
-        {myFollows &&
-          myFollows.map((iterator, index) => {
-            return videoThumbs[index] === undefined ? null : (
-              <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper}>
-                <Card
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "whitesmoke",
-                    width: "400px",
-                    // display: index > 2 && !showMore ? "none" : "block"
-                  }}
-                >
-                  <CardContent>
-                    <Grid container>
-                      <Grid item xs={12} className={classes.gridItem}>
-                        <ReactPlayer
-                          width={"367px"}
-                          height={"248px"}
-                          url={`https://www.twitch.tv/${iterator.to_name.replace(
-                            /\s+/g,
-                            ""
-                          )}`}
-                          light={`${thumbnailFormatter(videoThumbs[index])}`}
-                        />
-                      </Grid>
-                      <Grid style={{ display: `flex` }} item xs={12}>
-                        <div
-                          onClick={() =>
-                            handleBrowseToChannelDetails(iterator.to_id)
-                          }
-                        >
-                          <ImgChannel id={iterator.to_id} />
-                        </div>
-                        <div onClick={() => browse(iterator.to_id)}>
-                          <VideoDetails id={iterator.to_id} />
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })}
-      </Grid>
+    <div>
+      <FollowingNavigation />
     </div>
   );
 }
