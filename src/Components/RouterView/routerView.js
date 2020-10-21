@@ -9,6 +9,7 @@ import DetailsFollowStremer from "../../Pages/DetailsFollowStremer/detailsFollow
 import DetailsChannel from "../../Pages/DetailsChannel/detailsChannel";
 import HomeCarousel from "../HomeCarousel";
 import FollowingNavigation from "../FollowingNavigation";
+import FullScreenStreamView from "../../Pages/FullScreenStreamView/fullScreenStreamView";
 
 function RouterView() {
   return (
@@ -44,6 +45,9 @@ function RouterView() {
           </Route>
           <Route path="/detailsChannel/:id">
             <DetailsChannel />
+          </Route>
+          <Route path="/fullScreenStreamView/:id">
+            <FullScreenStreamView />
           </Route>
           <Route path="/">
             <Login />
