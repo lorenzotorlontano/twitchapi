@@ -7,7 +7,6 @@ import Home from "../../Pages/Home/Home";
 import DetailsSearched from "../../Pages/DetailsSearched/detailsSearched";
 import Following from "../../Pages/Following";
 import DetailsFollowStremer from "../../Pages/DetailsFollowStremer/detailsFollowStremer";
-import DetailsChannel from "../../Pages/DetailsChannel/detailsChannel";
 import { useStyles } from "./styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";

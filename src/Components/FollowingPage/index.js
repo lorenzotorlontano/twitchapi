@@ -81,7 +81,7 @@ export default function FollowingPage() {
   };
 
   const handleBrowseToChannelDetails = (id) => {
-    window.location.assign(`/detailsChannel/${id}`);
+    window.location.assign(`/fullScreenStreamView/${id}`);
   };
 
   const thumbnailFormatter = (url) => {
