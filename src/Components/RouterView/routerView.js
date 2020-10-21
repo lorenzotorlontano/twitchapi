@@ -6,7 +6,6 @@ import Hash from "../../Pages/Hash/hash";
 import DetailsSearched from "../../Pages/DetailsSearched/detailsSearched";
 import Following from "../../Pages/Following";
 import DetailsFollowStremer from "../../Pages/DetailsFollowStremer/detailsFollowStremer";
-import DetailsChannel from "../../Pages/DetailsChannel/detailsChannel";
 import HomeCarousel from "../HomeCarousel";
 import FollowingNavigation from "../FollowingNavigation";
 import FullScreenStreamView from "../../Pages/FullScreenStreamView/fullScreenStreamView";
@@ -42,9 +41,6 @@ function RouterView() {
           </Route>
           <Route path="/detailsFollowStremer/:id">
             <DetailsFollowStremer />
-          </Route>
-          <Route path="/detailsChannel/:id">
-            <DetailsChannel />
           </Route>
           <Route path="/fullScreenStreamView/:id">
             <FullScreenStreamView />
