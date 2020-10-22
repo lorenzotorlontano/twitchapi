@@ -20,13 +20,17 @@ function FollowingVideosTab() {
       arr.push(val.to_id);
     });
 
+  console.log("myuser", myUsers && myUsers);
+
+  console.log("arr", arr);
+
   useEffect(() => {
     arr.map((va, i) => {
       const res = getVideosById(va).then((re) => {
         setVideos(re.data.data);
       });
     });
-  }, [myUsers]);
+  }, []);
 
   console.log("videos", videos && videos);
 
@@ -42,6 +46,7 @@ function FollowingVideosTab() {
                 height={"248px"}
                 url={`https://www.twitch.tv/${val.url.replace(/\s+/g, "")}`}
               />
+              <span>{val.user_name}</span>
             </Grid>
           );
         })}
