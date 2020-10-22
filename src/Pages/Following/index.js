@@ -18,7 +18,6 @@ import FollowingNavigation from "../../Components/FollowingNavigation";
 import { useHistory, useLocation } from "react-router-dom";
 
 export default function Following() {
-
   const classes = useStyles();
 
   const [myFollows, setMyFollows] = useState([]);
@@ -43,9 +42,6 @@ export default function Following() {
     if (thumbUrl !== undefined) {
       console.log("ijnsdincrec", thumbUrl);
     }
-    // return (
-    //     thumbUrl
-    // )
   };
 
   useEffect(() => {
