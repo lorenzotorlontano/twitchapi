@@ -38,7 +38,6 @@ function FollowingVideosTab() {
     <Grid container style={{ color: "white", display: "flex" }}>
       {videos &&
         videos.map((val, index) => {
-          console.log("val", val);
           return (
             <Grid item md={3}>
               <ReactPlayer
