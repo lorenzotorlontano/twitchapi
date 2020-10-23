@@ -22,6 +22,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
+import FollowingLiveTabs from "../../Components/FollowingLiveTabs/followingLiveTabs";
 
 export default function FollowingNavigation() {
   const classes = useStyles();
@@ -174,7 +175,8 @@ export default function FollowingNavigation() {
         <Switch>
           <Route
             path="/following/live"
-            // component={HomeCarousel}
+            exact
+            component={FollowingLiveTabs}
           ></Route>
           <Route
             path="/following/videos"

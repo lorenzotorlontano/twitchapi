@@ -21,7 +21,7 @@ function WrapperSideTop() {
       );
       Promise.all(promises).then((responses) => {
         const imagesUrl = responses.map(
-          (res) => res.data.data[0].profile_image_url
+          (res) => res.data.data[0]?.profile_image_url
         );
         setCurrentUrl(imagesUrl);
       });
@@ -29,7 +29,7 @@ function WrapperSideTop() {
   }, [streams]);
 
   return (
-    <div style={{ width: "100%"}}>
+    <div style={{ width: "100%" }}>
       <div style={{ width: "100%" }}>
         <Topbar />
       </div>

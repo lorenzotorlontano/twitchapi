@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
   getCurrentUserFollows,
-  getUsers,
   getVideosById,
+  getUsers,
 } from "../../Service/Api/Api";
 import ReactPlayer from "react-player";
 import Grid from "@material-ui/core/Grid";
+import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
+import VideoDetails from "../../Components/VideoDetails";
 
 export default function FollowingVideosTab() {
   const [myFollows, setMyFollows] = useState([]);
   const [myFollowedChannels, setMyFollowedChannels] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const getMyFollows = async () => {
@@ -32,6 +35,36 @@ export default function FollowingVideosTab() {
     }
   }, [myFollows]);
 
+  useEffect(() => {
+    const promises = [];
+    if (!!myFollows.length) {
+      myFollows.forEach(
+        (val) => val.to_id && promises.push(getUsers(val.to_id))
+      );
+      Promise.all(promises).then((responses) => {
+        const followedChannels = responses.map((res) => res.data.data[0]);
+        setUsers(followedChannels);
+      });
+    }
+  }, [myFollows]);
+
+  console.log("dio bono", users);
+
+  const thumbnailFormatter = (url) => {
+    console.log("Munch url", url);
+    let formattedImg = url?.replace("{width}", "367");
+    let formattedImgFinal = formattedImg?.replace("{height}", "248");
+    return formattedImgFinal;
+  };
+
+  const browse = (id) => {
+    window.location.assign(`/detailsFollowStremer/${id}`);
+  };
+
+  const handleBrowseToChannelDetails = (id) => {
+    window.location.assign(`/fullScreenStreamView/${id}`);
+  };
+
   return (
     <Grid container>
       {myFollowedChannels &&
@@ -43,11 +76,23 @@ export default function FollowingVideosTab() {
                 <ReactPlayer
                   width={"367px"}
                   height={"248px"}
+                  // light={`${thumbnailFormatter(val && val.thumbnail_url)}`}
                   url={`https://www.twitch.tv/${
                     val && val.url.replace(/\s+/g, "")
                   }`}
                 />
-                <span>{val.user_name}</span>
+                <div style={{ display: "flex" }}>
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleBrowseToChannelDetails(val.user_id)}
+                  >
+                    <ImgChannel id={val.user_id} />
+                  </div>
+
+                  <div onClick={() => browse(val.user_id)}>
+                    <VideoDetails id={val.user_id} />
+                  </div>
+                </div>
               </Grid>
             );
           } else {
