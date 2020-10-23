@@ -15,25 +15,32 @@ function ButtonLive({ id }) {
       setStreamsDetails(re.data.data[0]);
     });
   }, []);
+
+  console.log("no matter where we breath", streamsDetails && streamsDetails);
+
   return (
-    <div style={{ height: "23px", width: "43px" }}>
-      <button
-        style={{
-          backgroundColor: "#E91916",
-          outlineStyle: "none",
-          border: "2px solid black",
-          color: "white",
-          fontWeight: "bold",
-          textTransform: "uppercase",
-          borderTopRightRadius: "5px",
-          borderTopLeftRadius: "5px",
-          borderBottomLeftRadius: "3px",
-          borderBottomRightRadius: "3px",
-        }}
-      >
-        {streamsDetails && streamsDetails.type}
-      </button>
-    </div>
+    <>
+      {streamsDetails ? (
+        <div style={{ height: "23px", width: "43px" }}>
+          <button
+            style={{
+              backgroundColor: "#E91916",
+              outlineStyle: "none",
+              border: "2px solid black",
+              color: "white",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              borderTopRightRadius: "5px",
+              borderTopLeftRadius: "5px",
+              borderBottomLeftRadius: "3px",
+              borderBottomRightRadius: "3px",
+            }}
+          >
+            {streamsDetails ? streamsDetails.type : null}
+          </button>
+        </div>
+      ) : null}
+    </>
   );
 }
 
