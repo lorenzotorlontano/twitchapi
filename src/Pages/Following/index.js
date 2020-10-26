@@ -16,6 +16,7 @@ import ImgChannel from "../Following/ImgChannel/imgChannel";
 import { Link, NavLink } from "react-router-dom";
 import FollowingNavigation from "../../Components/FollowingNavigation";
 import { useHistory, useLocation } from "react-router-dom";
+import { SettingsSystemDaydreamTwoTone } from "@material-ui/icons";
 
 export default function Following() {
   const classes = useStyles();
