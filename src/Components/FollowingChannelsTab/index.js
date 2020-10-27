@@ -53,7 +53,7 @@ export default function FollowingChannelsTab() {
                 md={6}
                 lg={4}
                 className={classes.channelsGridWrapper}
-                onClick={() => handleBrowseToChannelDetails(iterator.to_id)}
+                onClick={() => handleBrowseToChannelDetails(iterator?.id)}
               >
                 <img
                   className={classes.profileImg}
