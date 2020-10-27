@@ -24,6 +24,7 @@ import Paper from "@material-ui/core/Paper";
 import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
 import FollowingLiveTabs from "../../Components/FollowingLiveTabs/followingLiveTabs";
 import FollowingChannelsTab from "../../Components/FollowingChannelsTab";
+import FollowingCategoriesTab from "../../Components/FollowingCategoriesTab";
 
 export default function FollowingNavigation() {
   const classes = useStyles();
@@ -185,7 +186,10 @@ export default function FollowingNavigation() {
             component={FollowingVideosTab}
           ></Route>
           <Route path="/following/hosts"></Route>
-          <Route path="/following/categories"></Route>
+          <Route
+            path="/following/categories"
+            component={FollowingCategoriesTab}
+          ></Route>
           <Route
             path="/following/channels"
             component={FollowingChannelsTab}
