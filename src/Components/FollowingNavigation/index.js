@@ -25,6 +25,7 @@ import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
 import FollowingLiveTabs from "../../Components/FollowingLiveTabs/followingLiveTabs";
 import FollowingChannelsTab from "../../Components/FollowingChannelsTab";
 import FollowingCategoriesTab from "../../Components/FollowingCategoriesTab";
+import FollowingHostsTab from "../FollowingHostsTab";
 
 export default function FollowingNavigation() {
   const classes = useStyles();
@@ -185,7 +186,7 @@ export default function FollowingNavigation() {
             exact
             component={FollowingVideosTab}
           ></Route>
-          <Route path="/following/hosts"></Route>
+          <Route path="/following/hosts" component={FollowingHostsTab}></Route>
           <Route
             path="/following/categories"
             component={FollowingCategoriesTab}
@@ -196,6 +197,7 @@ export default function FollowingNavigation() {
           ></Route>
           <Route path="/following" exact component={FollowingPage}></Route>
         </Switch>
+        <br style={{ margin: "24px" }} />
       </Router>
     </div>
   );

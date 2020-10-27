@@ -24,13 +24,32 @@ import Button from "@material-ui/core/Button";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import "../../Topbar/topbar.css";
 import { searchCategories } from "../../../Service/Api/Api";
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
-function MainTopBar({ renderMenu, handleWrite, switchDefault, switchStyle, handleMobileMenuOpen, border, param, searchCate, classes, useStyles, color, me, menuId, handleProfileMenuOpen, renderMobileMenu }) {
-
+function MainTopBar({
+  renderMenu,
+  handleWrite,
+  switchDefault,
+  switchStyle,
+  handleMobileMenuOpen,
+  border,
+  param,
+  searchCate,
+  classes,
+  useStyles,
+  color,
+  me,
+  menuId,
+  handleProfileMenuOpen,
+  renderMobileMenu,
+}) {
   const toFollowing = () => {
-    window.location.assign("/following")
-  }
+    window.location.assign("/following");
+  };
+
+  const returnHome = () => {
+    window.location.assign("/home");
+  };
 
   return (
     <>
@@ -50,8 +69,15 @@ function MainTopBar({ renderMenu, handleWrite, switchDefault, switchStyle, handl
             <img
               className="iconTwitch"
               src="https://seeklogo.com/images/T/twitch-logo-4931D91F85-seeklogo.com.png"
+              onClick={() => returnHome()}
+              style={{ cursor: "pointer" }}
             />
-            <div style={{ fontSize: "19px", cursor: "pointer" }} onClick={() => toFollowing()} >Seguito</div>
+            <div
+              style={{ fontSize: "19px", cursor: "pointer" }}
+              onClick={() => toFollowing()}
+            >
+              Seguito
+            </div>
             <div style={{ fontSize: "19px" }}>Sfoglia</div>
             <div
               style={{ backgroundColor: "white", height: "40px", width: "1px" }}
@@ -129,8 +155,8 @@ function MainTopBar({ renderMenu, handleWrite, switchDefault, switchStyle, handl
         </Toolbar>
       </AppBar>
 
-      { renderMobileMenu}
-      { renderMenu}
+      {renderMobileMenu}
+      {renderMenu}
     </>
   );
 }
