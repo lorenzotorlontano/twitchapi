@@ -14,6 +14,8 @@ import VideoDetails from "../../Components/VideoDetails";
 import ReactPlayer from "react-player";
 import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
 import { Link, NavLink } from "react-router-dom";
+import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
+import FollowingCategoriesTab from "../FollowingCategoriesTab";
 
 export default function FollowingPage() {
   const classes = useStyles();
@@ -93,6 +95,11 @@ export default function FollowingPage() {
 
   return (
     <div>
+      <h3
+        style={{ color: "whitesmoke", textAlign: "left", marginLeft: "17px" }}
+      >
+        Live channels
+      </h3>
       <Grid container spacing={1} className={classes.videoWrapper}>
         {myFollows &&
           myFollows.map((iterator, index) => {
@@ -103,6 +110,7 @@ export default function FollowingPage() {
                     backgroundColor: "transparent",
                     color: "whitesmoke",
                     width: "400px",
+                    cursor: "pointer",
                     // display: index > 2 && !showMore ? "none" : "block",
                   }}
                 >
@@ -138,6 +146,13 @@ export default function FollowingPage() {
             );
           })}
       </Grid>
+      <h3
+        style={{ color: "whitesmoke", textAlign: "left", marginLeft: "17px" }}
+      >
+        Latest videos
+      </h3>
+      <FollowingVideosTab />
+      <FollowingCategoriesTab />
     </div>
   );
 }

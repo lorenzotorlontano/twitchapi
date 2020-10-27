@@ -4,6 +4,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import ReactPlayer from "react-player";
 import { useStyles } from "./styles";
 import { getSuggestedHomeStreamsCarousel } from "../../Service/Api/Api";
+import Carousel from "react-spring-3d-carousel";
 
 export default function HomeCarousel() {
   const classes = useStyles();
@@ -32,6 +33,25 @@ export default function HomeCarousel() {
 
     setRandomTrio(tempArray);
   }, [suggestedHomeStreams]);
+
+  // const slides = [
+  //   randomTrio &&
+  //     randomTrio.map((iterator) => {
+  //       return (
+  //         <div className={classes.carouselItem}>
+  //           <ReactPlayer
+  //             width={"372px"}
+  //             height={"252px"}
+  //             url={`https://www.twitch.tv/${iterator?.user_name.replace(
+  //               /\s+/g,
+  //               ""
+  //             )}`}
+  //             playing={true}
+  //           />
+  //         </div>
+  //       );
+  //     }),
+  // ];
 
   const Gallery = () => {
     const handleOnDragStart = (e) => e.preventDefault();
@@ -63,6 +83,7 @@ export default function HomeCarousel() {
 
   return (
     <div>
+      {/* <Carousel slides={slides} /> */}
       <Gallery />
     </div>
   );
