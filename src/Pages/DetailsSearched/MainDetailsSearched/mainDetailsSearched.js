@@ -12,9 +12,9 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NotificationsOffOutlinedIcon from "@material-ui/icons/NotificationsOffOutlined";
 import ItemSearched from "../ItemSearched/itemSearched";
-import ButtonShowMore from '../ButtonShowMore/buttonShowMore'
-import ButtonShow from '../ButtonShow/buttonShow'
-import ButtonFollow from '../ButtonFollow/buttonFollow'
+import ButtonShowMore from "../ButtonShowMore/buttonShowMore";
+import ButtonShow from "../ButtonShow/buttonShow";
+import ButtonFollow from "../ButtonFollow/buttonFollow";
 
 function MainDetailsSearched({
   showAll,
@@ -53,6 +53,7 @@ function MainDetailsSearched({
         handleSelection={handleSelection}
         switchIcon={switchIcon}
         handleIcon={handleIcon}
+        id={id}
       />
 
       <div
@@ -119,15 +120,11 @@ function MainDetailsSearched({
             })
           : null}
         {channels && channels.length > 5 && all === false && more === false ? (
-           <ButtonShow
-           showMore={showMore}
-           />
+          <ButtonShow showMore={showMore} />
         ) : null}
 
         {channels && channels.length > 5 && more === true && all === false ? (
-         <ButtonShowMore
-         showAll={showAll}
-         />
+          <ButtonShowMore showAll={showAll} />
         ) : null}
 
         {all === true && channels

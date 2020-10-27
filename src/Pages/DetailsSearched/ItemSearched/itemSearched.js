@@ -20,7 +20,12 @@ function ItemSearched({
   selectedNotific,
   handleSelection,
   switchIcon,
+  id,
 }) {
+  const browse = (id) => {
+    window.location.assign(`/detailsFollowStremer/${id}`);
+  };
+
   return (
     <>
       {channels &&
@@ -43,7 +48,9 @@ function ItemSearched({
                   }}
                   item
                   md={3}
+                  onClick={() => browse(val.id)}
                 >
+                  {console.log("va", val)}
                   <img
                     style={{
                       borderRadius: "50%",
