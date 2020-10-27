@@ -182,103 +182,95 @@ function DetailsFollowStremer() {
         </Grid>
       ) : (
         <Grid
-          style={{
-            display: "flex",
-            width: "100%",
-            height: "80%",
-            color: "white",
-            alignSelf: "center",
-          }}
+          style={{ width: "100%", backgroundColor: "#0E0E10", color: "white" }}
           container
         >
-          <Grid style={{ width: "100%", backgroundColor: "#0E0E10" }} container>
-            <Grid item md={6} style={{ display: "flex" }}>
-              <div
-                onClick={() => handleBrowseToChannelDetails(id)}
-                style={{
-                  display: "flex",
-                  cursor: "pointer",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ margin: "20px" }}>
-                  <img
-                    style={{
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                    }}
-                    src={usersDetails && usersDetails.profile_image_url}
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignSelf: "center",
-                    position: "absolute",
-                    paddingTop: "70px",
-                  }}
-                >
-                  <ButtonLive id={id} />
-                </div>
-              </div>
-
-              <div
-                style={{
-                  alignSelf: "center",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                <div style={{ display: "flex" }}>
-                  <span>{usersDetails && usersDetails.display_name}</span>{" "}
-                  {console.log("porco dio", streamsDetails && streamsDetails)}
-                  <VerifiedUserIcon
-                    style={{ color: "#9147FF", marginLeft: "10px" }}
-                  />
-                </div>
-                <div style={{ display: "flex" }}>
-                  <span>{usersDetails && usersDetails.view_count}</span>
-                  <div style={{ marginLeft: "10px" }}>
-                    <span>view count</span>
-                  </div>
-                </div>
-              </div>
-            </Grid>
-
-            <Grid
+          <Grid item md={6} style={{ display: "flex" }}>
+            <div
+              onClick={() => handleBrowseToChannelDetails(id)}
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
-                alignSelf: "center",
+                cursor: "pointer",
+                flexDirection: "column",
               }}
-              item
-              md={6}
             >
-              <div>
-                <ButtonFollow
-                  selectedIcon={selectedIcon}
-                  handleSelection={handleSelection}
-                  selectedNotific={selectedNotific}
-                  switchIcon={switchIcon}
-                  handleIcon={handleIcon}
-                  channels={streamsDetails && streamsDetails.user_name}
+              <div style={{ margin: "20px" }}>
+                <img
+                  style={{
+                    width: "64px",
+                    height: "64px",
+                    borderRadius: "50%",
+                  }}
+                  src={usersDetails && usersDetails.profile_image_url}
                 />
               </div>
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <MoreIcon />
+              <div
+                style={{
+                  display: "flex",
+                  alignSelf: "center",
+                  position: "absolute",
+                  paddingTop: "70px",
+                }}
+              >
+                <ButtonLive id={id} />
               </div>
-            </Grid>
+            </div>
+
             <div
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
+                alignSelf: "center",
+                fontSize: "20px",
+                fontWeight: "bold",
               }}
             >
-              <TabsFullScreen id={id} />
+              <div style={{ display: "flex" }}>
+                <span>{usersDetails && usersDetails.display_name}</span>{" "}
+                {console.log("porco dio", streamsDetails && streamsDetails)}
+                <VerifiedUserIcon
+                  style={{ color: "#9147FF", marginLeft: "10px" }}
+                />
+              </div>
+              <div style={{ display: "flex" }}>
+                <span>{usersDetails && usersDetails.view_count}</span>
+                <div style={{ marginLeft: "10px" }}>
+                  <span>view count</span>
+                </div>
+              </div>
             </div>
           </Grid>
+
+          <Grid
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignSelf: "center",
+            }}
+            item
+            md={6}
+          >
+            <div>
+              <ButtonFollow
+                selectedIcon={selectedIcon}
+                handleSelection={handleSelection}
+                selectedNotific={selectedNotific}
+                switchIcon={switchIcon}
+                handleIcon={handleIcon}
+                channels={streamsDetails && streamsDetails.user_name}
+              />
+            </div>
+            <div style={{ display: "flex", alignSelf: "center" }}>
+              <MoreIcon />
+            </div>
+          </Grid>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <TabsFullScreen id={id} />
+          </div>
         </Grid>
       )}
     </>

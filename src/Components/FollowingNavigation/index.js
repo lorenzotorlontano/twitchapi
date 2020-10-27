@@ -26,6 +26,7 @@ import FollowingLiveTabs from "../../Components/FollowingLiveTabs/followingLiveT
 import FollowingChannelsTab from "../../Components/FollowingChannelsTab";
 import FollowingCategoriesTab from "../../Components/FollowingCategoriesTab";
 import FollowingHostsTab from "../FollowingHostsTab";
+import FollowingHostTabs from "../FollowingHostTabs/followingHostTabs";
 
 export default function FollowingNavigation() {
   const classes = useStyles();
