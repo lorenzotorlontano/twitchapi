@@ -208,10 +208,8 @@ function DetailsFollowStremer() {
                       height: "64px",
                       borderRadius: "50%",
                     }}
-                    src={usersDetails && usersDetails.offline_image_url}
+                    src={usersDetails && usersDetails.profile_image_url}
                   />
-
-                  {console.log("dio can", usersDetails && usersDetails)}
                 </div>
                 <div
                   style={{

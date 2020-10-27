@@ -3,6 +3,7 @@ import { getStreamsById, getCurrentUserFollows } from "../../Service/Api/Api";
 import Grid from "@material-ui/core/Grid";
 import ReactPlayer from "react-player";
 import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
+import VideoDetails from "../../Components/VideoDetails";
 
 function FollowingLiveTabs() {
   const [streams, setStreams] = useState([]);
@@ -35,9 +36,12 @@ function FollowingLiveTabs() {
     let formattedImgFinal = formattedImg?.replace("{height}", "248");
     return formattedImgFinal;
   };
-
   const handleBrowseToChannelDetails = (id) => {
     window.location.assign(`/fullScreenStreamView/${id}`);
+  };
+
+  const browse = (id) => {
+    window.location.assign(`/detailsFollowStremer/${id}`);
   };
 
   return (
@@ -56,8 +60,15 @@ function FollowingLiveTabs() {
                   )}`}
                   light={`${thumbnailFormatter(val.thumbnail_url)}`}
                 />
-                <div onClick={() => handleBrowseToChannelDetails(val.user_id)}>
-                  <ImgChannel id={val.user_id} />
+                <div style={{ display: "flex" }}>
+                  <div
+                    onClick={() => handleBrowseToChannelDetails(val.user_id)}
+                  >
+                    <ImgChannel id={val.user_id} />
+                  </div>
+                  <div onClick={() => browse(val.user_id)}>
+                    <VideoDetails id={val.user_id} />
+                  </div>
                 </div>
               </Grid>
             );

@@ -89,79 +89,90 @@ function DetailsFollowStremer() {
     window.location.assign(`/fullScreenStreamView/${id}`);
   };
 
+  console.log("stream", streamsDetails && streamsDetails);
+  console.log("user", usersDetails && usersDetails);
+
   return (
-    <Grid
-      style={{
-        display: "flex",
-        width: "70%",
-        height: "537px",
-        color: "white",
-        alignSelf: "center",
-      }}
-      container
-    >
-      <div style={{ width: "100%", height: "100%" }}>
-        <ReactPlayer
-          width={"100%"}
-          height={"100%"}
-          url={`https://www.twitch.tv/${streamsDetails?.user_name.replace(
-            /\s+/g,
-            ""
-          )}`}
-        />
-      </div>
-      <Grid item md={6} style={{ display: "flex" }}>
-        <div
-          onClick={() => browseToFullScreenView(id)}
+    <>
+      {usersDetails !== undefined ? (
+        <Grid
           style={{
             display: "flex",
-            cursor: "pointer",
-            flexDirection: "column",
+            width: "70%",
+            height: "537px",
+            color: "white",
+            alignSelf: "center",
           }}
+          container
         >
-          <div style={{}}>
-            <img
-              style={{ width: "64px", height: "64px", borderRadius: "50%" }}
-              src={usersDetails && usersDetails.profile_image_url}
+          <div style={{ width: "100%", height: "100%" }}>
+            <ReactPlayer
+              width={"100%"}
+              height={"100%"}
+              url={`https://www.twitch.tv/${usersDetails?.display_name.replace(
+                /\s+/g,
+                ""
+              )}`}
             />
           </div>
-          <div
-            style={{
-              display: "flex",
-              alignSelf: "center",
-              position: "absolute",
-              paddingTop: "50px",
-            }}
-          >
-            <ButtonLive id={id} />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex" }}>
-            <span>{streamsDetails && streamsDetails.user_name}</span>{" "}
-            <VerifiedUserIcon />
-          </div>
-          <span>{streamsDetails && streamsDetails.title}</span>
-          <div style={{ display: "flex" }}>
-            <Link>Quattro chiacchiere</Link>
-            <span>{streamsDetails && streamsDetails.language}</span>
-          </div>
-        </div>
-      </Grid>
+          <Grid item md={6} style={{ display: "flex" }}>
+            <div
+              onClick={() => browseToFullScreenView(id)}
+              style={{
+                display: "flex",
+                cursor: "pointer",
+                flexDirection: "column",
+              }}
+            >
+              <div style={{}}>
+                <img
+                  style={{ width: "64px", height: "64px", borderRadius: "50%" }}
+                  src={usersDetails && usersDetails.profile_image_url}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignSelf: "center",
+                  position: "absolute",
+                  paddingTop: "50px",
+                }}
+              >
+                <ButtonLive id={id} />
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex" }}>
+                <span>{usersDetails && usersDetails.display_name}</span>{" "}
+                <VerifiedUserIcon />
+              </div>
+              <div style={{ display: "flex" }}>
+                <Link>Quattro chiacchiere</Link>
+              </div>
+            </div>
+          </Grid>
 
-      <Grid style={{ display: "flex", justifyContent: "flex-end" }} item md={6}>
-        <div>
-          <ButtonFollow
-            selectedIcon={selectedIcon}
-            handleSelection={handleSelection}
-            selectedNotific={selectedNotific}
-            switchIcon={switchIcon}
-            handleIcon={handleIcon}
-            channels={streamsDetails && streamsDetails.user_name}
-          />
-        </div>
-      </Grid>
-    </Grid>
+          <Grid
+            style={{ display: "flex", justifyContent: "flex-end" }}
+            item
+            md={6}
+          >
+            <div>
+              <ButtonFollow
+                selectedIcon={selectedIcon}
+                handleSelection={handleSelection}
+                selectedNotific={selectedNotific}
+                switchIcon={switchIcon}
+                handleIcon={handleIcon}
+                channels={streamsDetails && streamsDetails.user_name}
+              />
+            </div>
+          </Grid>
+        </Grid>
+      ) : (
+        <h1 style={{ color: "white" }}>son tutti undefined dio can</h1>
+      )}{" "}
+    </>
   );
 }
 
