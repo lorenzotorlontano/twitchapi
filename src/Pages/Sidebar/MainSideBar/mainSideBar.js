@@ -20,10 +20,40 @@ import "../../Sidebar/StyleSidebar/sidebar.css";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 
+function MainSideBar({
+  firstValue,
+  i,
+  j,
+  handleHideUserIcon,
+  handleUserIcon,
+  handleDelete,
+  handleSearch,
+  handleChange,
+  switchDefault,
+  switchStyle,
+  handleDrawerClose,
+  classes,
+  theme,
+  open,
+  isOver,
+  users,
+  myUser,
+  currentId,
+  color,
+  border,
+  param,
+  userIcon,
+  overUserIcon,
+  drawerWidth,
+  streams,
+  currentUrl,
+}) {
+  const [more, setMore] = useState(false);
+  const [moreDown, setMoreDown] = useState(false);
 
-function MainSideBar({ firstValue, i , j , handleHideUserIcon , handleUserIcon , handleDelete ,handleSearch  ,  handleChange,  switchDefault , switchStyle , handleDrawerClose , classes , theme , open ,isOver   , users   , myUser ,  currentId , color , border , param , userIcon , overUserIcon  , drawerWidth, streams ,  currentUrl }) {
-    const [more, setMore] = useState(false);
-    const [moreDown, setMoreDown] = useState(false);
+  const handleBrowseToChannelDetails = (id) => {
+    window.location.assign(`/fullScreenStreamView/${id}`);
+  };
 
   return (
     <>
@@ -209,7 +239,12 @@ function MainSideBar({ firstValue, i , j , handleHideUserIcon , handleUserIcon ,
                         item
                         md={12}
                       >
-                        <Grid item md={2}>
+                        {console.log("dio", val)}
+                        <Grid
+                          onClick={() => handleBrowseToChannelDetails(val.id)}
+                          item
+                          md={2}
+                        >
                           <img
                             style={{
                               width: "30px",
