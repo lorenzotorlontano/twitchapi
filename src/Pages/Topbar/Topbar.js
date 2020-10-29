@@ -25,18 +25,19 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import "../Topbar/topbar.css";
 import { searchCategories } from "../../Service/Api/Api";
 import MainTopBar from "../Topbar/MainTopBar/mainTopBar";
-import useStyles from '../Topbar/StyleCustom/useStyles'
-
-
+import useStyles from "../Topbar/StyleCustom/useStyles";
+import Switch from "@material-ui/core/Switch";
 
 export default function Topbar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [me, setMe] = useState();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [color, setColor] = useState("#333");
   const [searchCate, setSearchCatego] = useState();
   const [param, setParam] = useState();
+
+  const [online, setOnline] = useState("Offline");
 
   const [border, setBorder] = useState("0");
 
@@ -96,8 +97,39 @@ export default function Topbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {console.log("me", me)}
+      <Grid container>
+        <Grid style={{ display: "flex", margin: "5px" }} item md={12}>
+          {me ? (
+            <img
+              src={me.profile_image_url}
+              style={{ width: "30px", borderRadius: "50%" }}
+            />
+          ) : null}
+          <div>
+            <span>{me && me.display_name}</span>
+            <div>{online}</div>
+          </div>
+        </Grid>
+        <Grid
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignSelf: "center",
+          }}
+          item
+          md={12}
+        >
+          <div style={{ display: "flex", alignSelf: "center" }}>
+            <span>{online}</span>
+          </div>
+          <Switch
+            defaultChecked
+            color="default"
+            inputProps={{ "aria-label": "checkbox with default color" }}
+          />
+        </Grid>
+      </Grid>
     </Menu>
   );
 
@@ -143,7 +175,8 @@ export default function Topbar() {
 
   return (
     <Grid style={{ position: "fixed" }} container spacing={0}>
-      <MainTopBar renderMobileMenu={renderMobileMenu}
+      <MainTopBar
+        renderMobileMenu={renderMobileMenu}
         renderMenu={renderMenu}
         handleWrite={handleWrite}
         switchDefault={switchDefault}
