@@ -5,20 +5,22 @@ import ReactPlayer from "react-player";
 import { useStyles } from "./styles";
 import { getSuggestedHomeStreamsCarousel } from "../../Service/Api/Api";
 import { Carousel } from "3d-react-carousal";
+import useGetHomeSuggested from "../../Hooks/useGetHomeStreamsCarousel";
 
 export default function HomeCarousel() {
   const classes = useStyles();
 
   const [suggestedHomeStreams, setSuggestedStreams] = useState([]);
   const [randomTrio, setRandomTrio] = useState([]);
+  const { data } = useGetHomeSuggested();
 
-  useEffect(() => {
-    const getHomeSuggested = async () => {
-      const res = await getSuggestedHomeStreamsCarousel();
-      setSuggestedStreams(res.data.data);
-    };
-    getHomeSuggested();
-  }, []);
+  // useEffect(() => {
+  //   const getHomeSuggested = async () => {
+  //     const res = await getSuggestedHomeStreamsCarousel();
+  //     setSuggestedStreams(res.data.data);
+  //   };
+  //   getHomeSuggested();
+  // }, []);
 
   useEffect(() => {
     let tempArray = [];
@@ -27,18 +29,20 @@ export default function HomeCarousel() {
     let random_index2 = Math.floor(Math.random() * 20);
     let random_index3 = Math.floor(Math.random() * 20);
 
-    suggestedHomeStreams[random_index1]?.language !== "ko"
-      ? tempArray.push(suggestedHomeStreams[random_index1])
-      : tempArray.push(suggestedHomeStreams[16]);
-    suggestedHomeStreams[random_index1]?.language !== "ko"
-      ? tempArray.push(suggestedHomeStreams[random_index2])
-      : tempArray.push(suggestedHomeStreams[17]);
-    suggestedHomeStreams[random_index2]?.language !== "ko"
-      ? tempArray.push(suggestedHomeStreams[random_index3])
-      : tempArray.push(suggestedHomeStreams[18]);
+    data && data.data[random_index1]?.language !== "ko"
+      ? tempArray.push(data && data.data[random_index1])
+      : tempArray.push(data && data.data[16]);
+    data && data.data[random_index1]?.language !== "ko"
+      ? tempArray.push(data && data.data[random_index2])
+      : tempArray.push(data && data.data[17]);
+    data && data.data[random_index2]?.language !== "ko"
+      ? tempArray.push(data && data.data[random_index3])
+      : tempArray.push(data && data.data[18]);
 
     setRandomTrio(tempArray);
-  }, [suggestedHomeStreams]);
+  }, [data]);
+
+  console.log(data?.data);
 
   let slides = [
     <ReactPlayer
