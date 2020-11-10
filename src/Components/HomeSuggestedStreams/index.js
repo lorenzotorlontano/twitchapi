@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getSuggestedHomeStreams, getChannel } from "../../Service/Api/Api";
 import ReactPlayer from "react-player";
 import { useStyles } from "./styles";
 import Grid from "@material-ui/core/Grid";
@@ -7,22 +6,15 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import VideoDetails from "../../Components/VideoDetails";
+import useGetSuggestedHomeStreamsFirstSix from "../../Hooks/useGetSuggestedHomeStreamsFirstSix";
 
 export default function HomeSuggestedStreams() {
   const classes = useStyles();
 
-  const [suggestedHomeStreams, setSuggestedStreams] = useState([]);
   const [suggestedHomeStreamsInfo, setSuggestedStreamsInfo] = useState([]);
+  const { data } = useGetSuggestedHomeStreamsFirstSix();
   const [showMore, setShowMore] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
-
-  useEffect(() => {
-    const getHomeSuggested = async () => {
-      const res = await getSuggestedHomeStreams();
-      setSuggestedStreams(res.data.data);
-    };
-    getHomeSuggested();
-  }, []);
 
   const handleClick = () => {
     setShowMore(true);
@@ -35,15 +27,11 @@ export default function HomeSuggestedStreams() {
     return formattedImgFinal;
   };
 
-  {
-    console.log("dio cane");
-  }
-
   return (
     <div className={classes.root}>
       <Grid container spacing={1} className={classes.videoWrapper}>
-        {suggestedHomeStreams &&
-          suggestedHomeStreams.map((img, index) => {
+        {data &&
+          data.data.map((img, index) => {
             return (
               <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper}>
                 <Card

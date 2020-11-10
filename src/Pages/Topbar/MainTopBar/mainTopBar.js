@@ -15,7 +15,6 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { getStreams, getMe, getUsers } from "../../../Service/Api/Api";
 import Grid from "@material-ui/core/Grid";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
@@ -23,7 +22,6 @@ import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineO
 import Button from "@material-ui/core/Button";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import "../../Topbar/topbar.css";
-import { searchCategories } from "../../../Service/Api/Api";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function MainTopBar({
@@ -38,7 +36,7 @@ function MainTopBar({
   classes,
   useStyles,
   color,
-  me,
+  data,
   menuId,
   handleProfileMenuOpen,
   renderMobileMenu,
@@ -144,9 +142,9 @@ function MainTopBar({
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              {me ? (
+              {data ? (
                 <img
-                  src={me.profile_image_url}
+                  src={data.data[0].profile_image_url}
                   style={{ width: "30px", borderRadius: "50%" }}
                 />
               ) : null}

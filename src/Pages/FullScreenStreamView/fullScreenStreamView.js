@@ -7,13 +7,8 @@ import {
   useParams,
   NavLink,
 } from "react-router-dom";
-import {
-  getSuggestedHomeStreams,
-  getStreamsById,
-  getChannel,
-  getStreamsDetails,
-  getUsers,
-} from "../../Service/Api/Api";
+import useGetStreamById from "../../Hooks/useGetStreamById";
+import useGetUser from "../../Hooks/useGetUser";
 import ReactPlayer from "react-player";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Grid from "@material-ui/core/Grid";
@@ -23,26 +18,13 @@ import ButtonLive from "../../Components/ButtonLive/buttonLive";
 import TabsFullScreen from "../../Components/TabsFullScreenView/tabsFullScreen";
 
 function DetailsFollowStremer() {
+  const { id } = useParams();
+  const { data: streamsDetails } = useGetStreamById(id);
+  const { data } = useGetUser(id);
   const [streamsKey, setStreamsKey] = useState();
   const [channel, setChannel] = useState();
-  const [streamsDetails, setStreamsDetails] = useState();
-  const [usersDetails, setUsersDetails] = useState();
   const [selectedIcon, setSelectedIcon] = useState("");
   const [selectedNotific, setSelectedNotific] = useState("");
-
-  const { id } = useParams();
-
-  useEffect(() => {
-    const resp = getStreamsById(id).then((re) => {
-      setStreamsDetails(re.data.data[0]);
-    });
-  }, []);
-
-  useEffect(() => {
-    const res = getUsers(id).then((re) => {
-      setUsersDetails(re.data.data[0]);
-    });
-  }, []);
 
   const thumbnailFormatter = (url) => {
     let formattedImg = url?.replace("{width}", "50");
@@ -77,7 +59,7 @@ function DetailsFollowStremer() {
 
   return (
     <>
-      {streamsDetails !== undefined ? (
+      {streamsDetails && streamsDetails?.data[0] !== undefined ? (
         <Grid
           style={{
             display: "flex",
@@ -92,10 +74,10 @@ function DetailsFollowStremer() {
             <ReactPlayer
               width={"100%"}
               height={"100%"}
-              url={`https://www.twitch.tv/${streamsDetails?.user_name.replace(
-                /\s+/g,
-                ""
-              )}`}
+              url={`https://www.twitch.tv/${
+                streamsDetails &&
+                streamsDetails?.data[0]?.user_name.replace(/\s+/g, "")
+              }`}
             />
           </div>
           <Grid style={{ width: "100%", backgroundColor: "#0E0E10" }} container>
@@ -115,7 +97,7 @@ function DetailsFollowStremer() {
                       height: "64px",
                       borderRadius: "50%",
                     }}
-                    src={usersDetails && usersDetails.profile_image_url}
+                    src={data && data.data[0]?.profile_image_url}
                   />
                 </div>
                 <div
@@ -138,7 +120,9 @@ function DetailsFollowStremer() {
                 }}
               >
                 <div style={{ display: "flex" }}>
-                  <span>{streamsDetails && streamsDetails.user_name}</span>{" "}
+                  <span>
+                    {streamsDetails && streamsDetails?.data[0]?.user_name}
+                  </span>{" "}
                   <VerifiedUserIcon
                     style={{ color: "#9147FF", marginLeft: "10px" }}
                   />
@@ -162,7 +146,9 @@ function DetailsFollowStremer() {
                   selectedNotific={selectedNotific}
                   switchIcon={switchIcon}
                   handleIcon={handleIcon}
-                  channels={streamsDetails && streamsDetails.user_name}
+                  channels={
+                    streamsDetails && streamsDetails?.data[0]?.user_name
+                  }
                 />
               </div>
               <div style={{ display: "flex", alignSelf: "center" }}>
@@ -201,7 +187,7 @@ function DetailsFollowStremer() {
                     height: "64px",
                     borderRadius: "50%",
                   }}
-                  src={usersDetails && usersDetails.profile_image_url}
+                  src={data && data.data[0].profile_image_url}
                 />
               </div>
               <div
@@ -224,14 +210,13 @@ function DetailsFollowStremer() {
               }}
             >
               <div style={{ display: "flex" }}>
-                <span>{usersDetails && usersDetails.display_name}</span>{" "}
-                {console.log("porco dio", streamsDetails && streamsDetails)}
+                <span>{data && data.data[0].display_name}</span>{" "}
                 <VerifiedUserIcon
                   style={{ color: "#9147FF", marginLeft: "10px" }}
                 />
               </div>
               <div style={{ display: "flex" }}>
-                <span>{usersDetails && usersDetails.view_count}</span>
+                <span>{data && data.data[0].view_count}</span>
                 <div style={{ marginLeft: "10px" }}>
                   <span>view count</span>
                 </div>
@@ -255,7 +240,7 @@ function DetailsFollowStremer() {
                 selectedNotific={selectedNotific}
                 switchIcon={switchIcon}
                 handleIcon={handleIcon}
-                channels={streamsDetails && streamsDetails.user_name}
+                channels={streamsDetails && streamsDetails?.data[0]?.user_name}
               />
             </div>
             <div style={{ display: "flex", alignSelf: "center" }}>

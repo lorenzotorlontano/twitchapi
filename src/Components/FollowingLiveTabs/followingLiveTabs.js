@@ -1,83 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { getStreamsById, getCurrentUserFollows } from "../../Service/Api/Api";
+import React, { useEffect, useState, setState } from "react";
 import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import VideoDetails from "../../Components/VideoDetails";
 import ReactPlayer from "react-player";
 import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
-import VideoDetails from "../../Components/VideoDetails";
+import { Link, NavLink } from "react-router-dom";
+import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
+import FollowingCategoriesTab from "../FollowingCategoriesTab";
+import useGetUser from "../../Hooks/useGetUser";
+import useGetMyFollows from "../../Hooks/useGetMyFollows";
+import FollowingPageDetails from "../FollowingPage/FollowingPageDetails/followingPageDetails";
+export default function FollowingPage() {
+  const { data: myFollows } = useGetMyFollows();
 
-function FollowingLiveTabs() {
-  const [streams, setStreams] = useState([]);
-  const [myFollows, setMyFollows] = useState([]);
-  const [myFollowedChannels, setMyFollowedChannels] = useState([]);
+  const [videoThumbs, setVideoThumbs] = useState([]);
 
-  useEffect(() => {
-    const getMyFollows = async () => {
-      const res = await getCurrentUserFollows();
-      setMyFollows(res.data.data);
-    };
-    getMyFollows();
-  }, []);
+  const [videoInfo, setVideoInfo] = useState([]);
 
-  useEffect(() => {
-    const promises = [];
-    if (!!myFollows.length) {
-      myFollows.forEach(
-        (val) => val.to_id && promises.push(getStreamsById(val.to_id))
-      );
-      Promise.all(promises).then((responses) => {
-        const followedChannels = responses.map((res) => res.data.data[0]);
-        setMyFollowedChannels(followedChannels);
-      });
-    }
-  }, [myFollows]);
+  const [showMore, setShowMore] = useState(false);
 
-  const thumbnailFormatter = (url) => {
-    let formattedImg = url?.replace("{width}", "367");
-    let formattedImgFinal = formattedImg?.replace("{height}", "248");
-    return formattedImgFinal;
-  };
   const handleBrowseToChannelDetails = (id) => {
     window.location.assign(`/fullScreenStreamView/${id}`);
   };
 
-  const browse = (id) => {
-    window.location.assign(`/detailsFollowStremer/${id}`);
-  };
-
   return (
-    <Grid container style={{ color: "white" }}>
-      {myFollowedChannels &&
-        myFollowedChannels.map((val, index) => {
-          if (val?.type === "live") {
-            return (
-              <Grid item md={4}>
-                <ReactPlayer
-                  width={"367px"}
-                  height={"248px"}
-                  url={`https://www.twitch.tv/${val.user_name.replace(
-                    /\s+/g,
-                    ""
-                  )}`}
-                  light={`${thumbnailFormatter(val.thumbnail_url)}`}
+    <>
+      <div>
+        {myFollows &&
+          myFollows?.data?.map((iterator, index) => {
+            if (index < 1) {
+              return (
+                <FollowingPageDetails
+                  id={iterator.to_id}
+                  key={index}
+                  myFollows={myFollows.data}
                 />
-                <div style={{ display: "flex" }}>
-                  <div
-                    onClick={() => handleBrowseToChannelDetails(val.user_id)}
-                  >
-                    <ImgChannel id={val.user_id} />
-                  </div>
-                  <div onClick={() => browse(val.user_id)}>
-                    <VideoDetails id={val.user_id} />
-                  </div>
-                </div>
-              </Grid>
-            );
-          } else {
-            return null;
-          }
-        })}
-    </Grid>
+              );
+            } else {
+              return null;
+            }
+          })}
+      </div>
+    </>
   );
 }
-
-export default FollowingLiveTabs;

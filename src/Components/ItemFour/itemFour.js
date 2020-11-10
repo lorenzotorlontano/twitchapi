@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from "react";
-import {
-  getVideosById,
-  getUsers,
-  getClips,
-  getSuggestedHomeStreams,
-  getVideosByType,
-} from "../../Service/Api/Api";
 import Grid from "@material-ui/core/Grid";
 import ReactPlayer from "react-player";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SelectFilter from "../../Components/SelectFilter/selectFilter";
 import Button from "@material-ui/core/Button";
+import useGetClips from "../../Hooks/useGetClips";
+import { thumbnailFormatter } from "../../Utils/thumbnailFormatter";
 import SecondSelectFilter from "../../Components/SelectFilter/secondSelectFilter";
+import useGetVideosByType from "../../Hooks/useGetVideosByType";
 
 function ItemFour({ id }) {
-  const [clips, setClips] = useState();
   const [views, setViews] = useState("highlight");
-  const [videos, setVideos] = useState();
   const [secondViews, setSecondViews] = useState("time");
-
   const browseToStream = (id) => {
     window.location.assign(`/detailsFollowStremer/${id}`);
   };
+
+  const { data: clips } = useGetClips(id);
 
   const filterCall = (event) => {
     setViews(event.target.value);
@@ -37,18 +32,9 @@ function ItemFour({ id }) {
     return formattedImgFinal;
   };
 
-  useEffect(() => {
-    setVideos(null);
-    if (views !== "clips") {
-      const r = getVideosByType(views, id, secondViews).then((re) => {
-        setVideos(re.data.data);
-      });
-    } else {
-      const re = getClips(id).then((re) => {
-        setClips(re.data.data);
-      });
-    }
-  }, [views, secondViews]);
+  const { data: videos } = useGetVideosByType(id, views, secondViews);
+
+  console.log("data", videos && videos.data);
 
   return (
     <Grid style={{ justifyContent: "center", alignSelf: "center" }} container>
@@ -82,7 +68,7 @@ function ItemFour({ id }) {
         </Grid>
       ) : null}
       {videos && views !== "clips"
-        ? videos.map((val, index) => {
+        ? videos.data.map((val, index) => {
             if (index < 6) {
               return (
                 <Grid item md={4}>
@@ -104,14 +90,15 @@ function ItemFour({ id }) {
             }
           })
         : clips &&
-          clips.map((va, i) => {
-            if (i < 5) {
+          clips.data.map((va, i) => {
+            if (i < 3) {
               return (
                 <Grid item md={4}>
                   <ReactPlayer
                     width={"382px"}
                     height={"214px"}
                     url={`https://www.twitch.tv/${va.url.replace(/\s+/g, "")}`}
+                    light={`${thumbnailFormatter(va.thumbnail_url)}`}
                   />
                   <div
                     onClick={() => browseToStream(id)}

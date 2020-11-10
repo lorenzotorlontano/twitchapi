@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { searchCategories, searchChannels } from "../../Service/Api/Api";
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,35 +9,21 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import NotificationsOffOutlinedIcon from "@material-ui/icons/NotificationsOffOutlined";
 import MainDetailsSearched from "../DetailsSearched/MainDetailsSearched/mainDetailsSearched";
+import useGetSearchChannels from "../../Hooks/useSearchChannels";
 
 function DetailsSearched() {
-  const [categories, setCategories] = useState();
   const [more, setMore] = useState(false);
   const [all, setAll] = useState(false);
-
-  const [channels, setChannels] = useState();
   const [icon, setIcon] = useState(false);
   const [notifcIcon, setNotifcIcon] = useState(<NotificationsIcon />);
   const [selectedIcon, setSelectedIcon] = useState("");
   const [selectedNotific, setSelectedNotific] = useState("");
-
   const [favoriteIcon, setFavoriteIcon] = useState(true);
 
   const { id } = useParams();
 
-  useEffect(() => {
-    const resp = searchCategories(id).then((re) => {
-      setCategories(re.data.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const res = searchChannels(id).then((re) => {
-      setChannels(re.data.data);
-    });
-  }, []);
+  const { data: channels } = useGetSearchChannels(id);
 
   const switchIcon = (name) => {
     const strSplitted = selectedIcon.replace(`${name}&`, "");
@@ -57,11 +42,8 @@ function DetailsSearched() {
   };
 
   const handleSelection = (name) => {
-    console.log('name', name)
     let str = selectedIcon.concat(name, "&");
     setSelectedIcon(str);
-    console.log('selectedIcon', selectedIcon)
-
   };
 
   const showMore = () => {
@@ -88,17 +70,15 @@ function DetailsSearched() {
         color: "white",
       }}
     >
-  
       <MainDetailsSearched
         showAll={showAll}
         showMore={showMore}
         handleSelection={handleSelection}
         handleIcon={handleIcon}
         switchIcon={switchIcon}
-        channels={channels}
-        selectedIcon={ selectedIcon}
+        channels={channels && channels?.data}
+        selectedIcon={selectedIcon}
         selectedNotific={selectedNotific}
-        categories={categories}
         all={all}
         more={more}
         id={id}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { searchCategories, searchChannels } from "../../../Service/Api/Api";
 import {
   BrowserRouter as Router,
   Switch,
@@ -50,7 +49,6 @@ function ItemSearched({
                   md={3}
                   onClick={() => browse(val.id)}
                 >
-                  {console.log("va", val)}
                   <img
                     style={{
                       borderRadius: "50%",

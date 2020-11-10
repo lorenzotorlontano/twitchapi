@@ -1,10 +1,4 @@
 import React, { useEffect, useState, setState } from "react";
-import {
-  getCurrentUserFollows,
-  getStreamsById,
-  getChannel,
-  getUsers,
-} from "../../Service/Api/Api";
 import { useStyles } from "./styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -16,124 +10,53 @@ import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
 import { Link, NavLink } from "react-router-dom";
 import FollowingVideosTab from "../FollowingVideosTab/followingVideosTab";
 import FollowingCategoriesTab from "../FollowingCategoriesTab";
-
+import useGetUser from "../../Hooks/useGetUser";
+import useGetMyFollows from "../../Hooks/useGetMyFollows";
+import FollowingPageDetails from "../FollowingPage/FollowingPageDetails/followingPageDetails";
 export default function FollowingPage() {
+  const { data: myFollows } = useGetMyFollows();
+
   const classes = useStyles();
 
-  const [myFollows, setMyFollows] = useState([]);
-
-  const [videoThumbs, setVideoThumbs] = useState([]);
-
-  const [videoInfo, setVideoInfo] = useState([]);
-
-  const [showMore, setShowMore] = useState(false);
-
-  useEffect(() => {
-    const getMyFollows = async () => {
-      const res = await getCurrentUserFollows();
-      setMyFollows(res.data.data);
-    };
-    getMyFollows();
-  }, []);
-
-  useEffect(() => {
-    const promises = [];
-    if (!!myFollows.length) {
-      myFollows.forEach(
-        (val) => val.to_id && promises.push(getStreamsById(val.to_id))
-      );
-      Promise.all(promises).then((responses) => {
-        const thumbsImages = responses.map(
-          (res) => res.data.data[0]?.thumbnail_url
-        );
-        setVideoThumbs(thumbsImages);
-        console.log("thumbs", thumbsImages);
-        console.log("my followsss", myFollows);
-      });
-    }
-  }, [myFollows]);
-
-  const browse = (id) => {
-    console.log(`cioa`);
-    const res = getChannel(id).then((re) => {
-      setVideoInfo(re.data.data[0].broadcaster_id);
-      window.location.assign(
-        `/detailsFollowStremer/${re.data.data[0].broadcaster_id}`
-      );
-    });
-  };
-
-  const handleBrowseToChannelDetails = (id) => {
-    window.location.assign(`/fullScreenStreamView/${id}`);
-  };
-
-  const thumbnailFormatter = (url) => {
-    console.log("Munch url", url);
-    let formattedImg = url?.replace("{width}", "367");
-    let formattedImgFinal = formattedImg?.replace("{height}", "248");
-    return formattedImgFinal;
-  };
-
   return (
-    <div>
+    <>
       <h3
-        style={{ color: "whitesmoke", textAlign: "left", marginLeft: "17px" }}
+        style={{
+          color: "whitesmoke",
+          textAlign: "left",
+          marginLeft: "17px",
+        }}
       >
         Live channels
       </h3>
-      <Grid container spacing={1} className={classes.videoWrapper}>
+      <div>
         {myFollows &&
-          myFollows.map((iterator, index) => {
-            return videoThumbs[index] === undefined ? null : (
-              <Grid item xs={12} md={6} lg={4} className={classes.gridWrapper}>
-                <Card
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "whitesmoke",
-                    width: "400px",
-                    cursor: "pointer",
-                    // display: index > 2 && !showMore ? "none" : "block",
-                  }}
-                >
-                  <CardContent>
-                    <Grid container>
-                      <Grid item xs={12} className={classes.gridItem}>
-                        <ReactPlayer
-                          width={"367px"}
-                          height={"248px"}
-                          url={`https://www.twitch.tv/${iterator.to_name.replace(
-                            /\s+/g,
-                            ""
-                          )}`}
-                          light={`${thumbnailFormatter(videoThumbs[index])}`}
-                        />
-                      </Grid>
-                      <Grid style={{ display: `flex` }} item xs={12}>
-                        <div
-                          onClick={() =>
-                            handleBrowseToChannelDetails(iterator.to_id)
-                          }
-                        >
-                          <ImgChannel id={iterator.to_id} />
-                        </div>
-                        <div onClick={() => browse(iterator.to_id)}>
-                          <VideoDetails id={iterator.to_id} />
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
+          myFollows?.data?.map((iterator, index) => {
+            if (index < 1) {
+              return (
+                <FollowingPageDetails
+                  id={iterator.to_id}
+                  key={index}
+                  myFollows={myFollows.data}
+                />
+              );
+            } else {
+              return null;
+            }
           })}
-      </Grid>
-      <h3
-        style={{ color: "whitesmoke", textAlign: "left", marginLeft: "17px" }}
-      >
-        Latest videos
-      </h3>
-      <FollowingVideosTab />
-      <FollowingCategoriesTab />
-    </div>
+
+        <h3
+          style={{
+            color: "whitesmoke",
+            textAlign: "left",
+            marginLeft: "17px",
+          }}
+        >
+          Latest videos
+        </h3>
+        <FollowingVideosTab />
+        <FollowingCategoriesTab />
+      </div>
+    </>
   );
 }

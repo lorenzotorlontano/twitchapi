@@ -32,12 +32,9 @@ function MainSideBar({
   switchDefault,
   switchStyle,
   handleDrawerClose,
-  classes,
-  theme,
   open,
   isOver,
   users,
-  myUser,
   currentId,
   color,
   border,
@@ -89,29 +86,31 @@ function MainSideBar({
             <div style={{ padding: "0px" }}>
               <List style={{ padding: "0px" }}>
                 {currentUrl &&
-                  streams.map((text, index) =>
+                  streams?.map((text, index) =>
                     index < firstValue ? (
                       <StreamList
                         text={open === true ? text : null}
                         index={index}
-                        currentUrl={currentUrl[index]}
+                        currentUrl={currentUrl && currentUrl[index]}
                       />
                     ) : null
                   )}
 
                 {more
-                  ? streams.map((text, index) =>
+                  ? streams?.map((text, index) =>
                       index + firstValue < i ? (
                         <StreamList
                           text={open === true ? text : null}
                           index={index + firstValue}
-                          currentUrl={currentUrl[index + firstValue]}
+                          currentUrl={
+                            currentUrl && currentUrl[index + firstValue]
+                          }
                         />
                       ) : null
                     )
                   : null}
 
-                {!more && streams.length > 3 ? (
+                {!more && streams?.length > 3 ? (
                   <button
                     className="showMoreButton"
                     onClick={() => setMore(true)}
@@ -119,7 +118,8 @@ function MainSideBar({
                     Mostra di più
                   </button>
                 ) : null}
-                {more && streams.length > 3 ? (
+
+                {more && streams?.length > 3 ? (
                   <div>
                     <button
                       className="showMoreButton"
@@ -133,29 +133,29 @@ function MainSideBar({
               <Divider />
               <List style={{}}>
                 {currentUrl &&
-                  streams.map((text, index) =>
+                  streams?.map((text, index) =>
                     index + i < j ? (
                       <StreamList
                         text={open === true ? text : null}
                         index={index + i}
-                        currentUrl={currentUrl[index + i]}
+                        currentUrl={currentUrl && currentUrl[index + i]}
                       />
                     ) : null
                   )}
 
                 {moreDown && streams
-                  ? streams.map((text, index) =>
-                      index + j < streams.length ? (
+                  ? streams?.map((text, index) =>
+                      index + j < streams?.length ? (
                         <StreamList
                           text={open === true ? text : null}
                           index={index + j}
-                          currentUrl={currentUrl[index + j]}
+                          currentUrl={currentUrl && currentUrl[index + j]}
                         />
                       ) : null
                     )
                   : null}
 
-                {!moreDown && streams.length >= 3 ? (
+                {!moreDown && streams?.length >= 3 ? (
                   <div>
                     <button
                       className="showMoreButton"
@@ -166,7 +166,7 @@ function MainSideBar({
                   </div>
                 ) : null}
 
-                {moreDown && streams.length >= 3 ? (
+                {moreDown && streams?.length >= 3 ? (
                   <div>
                     <button
                       className="showMoreButton"
@@ -181,24 +181,24 @@ function MainSideBar({
           ) : (
             <div>
               {currentUrl && streams
-                ? streams.map((text, index) =>
+                ? streams?.map((text, index) =>
                     index < i ? (
                       <StreamList
                         text={open === true ? text : null}
                         index={index}
-                        currentUrl={currentUrl[index]}
+                        currentUrl={currentUrl && currentUrl[index]}
                       />
                     ) : null
                   )
                 : null}
               <Divider />
               {currentUrl && streams
-                ? streams.map((text, index) =>
-                    index + i < streams.length ? (
+                ? streams?.map((text, index) =>
+                    index + i < streams?.length ? (
                       <StreamList
                         text={open === true ? text : null}
                         index={index + i}
-                        currentUrl={currentUrl[index + i]}
+                        currentUrl={currentUrl && currentUrl[index + i]}
                       />
                     ) : null
                   )
@@ -229,6 +229,7 @@ function MainSideBar({
                   } else {
                     return (
                       <Grid
+                        key={index}
                         onMouseOver={() => handleUserIcon(val.display_name)}
                         onMouseOut={() => handleHideUserIcon(val.display_name)}
                         style={{
@@ -239,7 +240,6 @@ function MainSideBar({
                         item
                         md={12}
                       >
-                        {console.log("dio", val)}
                         <Grid
                           onClick={() => handleBrowseToChannelDetails(val.id)}
                           item
