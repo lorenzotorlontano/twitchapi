@@ -1,54 +1,28 @@
 import React, { useState, useEffect } from "react";
-import {
-  getVideosById,
-  getUsers,
-  getClips,
-  getSuggestedHomeStreams,
-} from "../../Service/Api/Api";
 import Grid from "@material-ui/core/Grid";
 import ReactPlayer from "react-player";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import useGetSuggestedHomeStreamsFirstSix from "../../Hooks/useGetSuggestedHomeStreamsFirstSix";
+import useGetClips from "../../Hooks/useGetClips";
+import { thumbnailFormatter } from "../../Utils/thumbnailFormatter";
 
 function ItemOne({ id }) {
-  const [videos, setVideos] = useState();
   const [usersDetails, setUsersDetails] = useState();
-  const [clips, setClips] = useState();
   const [suggestedHomeStreams, setSuggestedStreams] = useState([]);
+  const { data } = useGetSuggestedHomeStreamsFirstSix();
 
-  useEffect(() => {
-    const resp = getVideosById(id).then((re) => {
-      setVideos(re.data.data);
-    });
-  }, []);
+  const { data: clips } = useGetClips(id);
 
-  useEffect(() => {
-    const res = getUsers(id).then((re) => {
-      setUsersDetails(re.data.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const r = getSuggestedHomeStreams().then((re) => {
-      setSuggestedStreams(re.data.data[0]);
-    });
-  }, []);
-
-  useEffect(() => {
-    const re = getClips(id).then((re) => {
-      setClips(re.data.data);
-    });
-  }, []);
+  console.log("clips", clips && clips.data);
 
   const browseToStream = (id) => {
     window.location.assign(`/detailsFollowStremer/${id}`);
   };
 
-  console.log("clips", clips && clips);
-
   return (
     <Grid container>
       {clips &&
-        clips.map((val, index) => {
+        clips.data.map((val, index) => {
           if (index < 3) {
             return (
               <Grid style={{ justifyContent: "center" }} item md={4}>
@@ -56,6 +30,7 @@ function ItemOne({ id }) {
                   width={"382px"}
                   height={"214px"}
                   url={`https://www.twitch.tv/${val.url.replace(/\s+/g, "")}`}
+                  light={`${thumbnailFormatter(val.thumbnail_url)}`}
                 />
                 <div
                   onClick={() => browseToStream(id)}

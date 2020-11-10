@@ -22,14 +22,18 @@ function StreamList({ index, text, currentUrl }) {
           height: "30px",
           borderRadius: "50%",
         }}
-        src={currentUrl}
+        src={currentUrl && currentUrl.profile_image_url}
       />
       <ListItemText
         style={{ width: "100%", paddingLeft: "5px" }}
         primary={
           text !== null ? (
             <div
-              style={{ fontSize: "14px", maxWidth: "100px", overflow: "hidden" }}
+              style={{
+                fontSize: "14px",
+                maxWidth: "100px",
+                overflow: "hidden",
+              }}
             >
               <span
                 style={{
@@ -70,7 +74,13 @@ function StreamList({ index, text, currentUrl }) {
                 marginLeft: "3px",
               }}
             >
-              <div style={{ fontSize: "12px", display: "flex", marginRight: '30px' }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  display: "flex",
+                  marginRight: "30px",
+                }}
+              >
                 <div
                   style={{
                     backgroundColor: "red",
@@ -80,7 +90,7 @@ function StreamList({ index, text, currentUrl }) {
                     alignSelf: "center",
                   }}
                 ></div>
-                <span style={{color: '#1f1f23'}}>{"P"}</span>
+                <span style={{ color: "#1f1f23" }}>{"P"}</span>
                 {text.viewer_count}
               </div>
             </div>

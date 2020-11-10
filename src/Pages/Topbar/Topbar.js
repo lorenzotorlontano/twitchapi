@@ -15,7 +15,6 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { getStreams, getMe, getUsers } from "../../Service/Api/Api";
 import Grid from "@material-ui/core/Grid";
 import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
@@ -23,15 +22,16 @@ import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineO
 import Button from "@material-ui/core/Button";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import "../Topbar/topbar.css";
-import { searchCategories } from "../../Service/Api/Api";
 import MainTopBar from "../Topbar/MainTopBar/mainTopBar";
 import useStyles from "../Topbar/StyleCustom/useStyles";
 import Switch from "@material-ui/core/Switch";
+import useGetMe from "../../Hooks/useGetMe";
 
 export default function Topbar() {
   const classes = useStyles();
+
+  const { data } = useGetMe();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [me, setMe] = useState();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [color, setColor] = useState("#333");
   const [searchCate, setSearchCatego] = useState();
@@ -46,12 +46,6 @@ export default function Topbar() {
 
   const menuId = "primary-search-account-menu";
   const mobileMenuId = "primary-search-account-menu-mobile";
-
-  useEffect(() => {
-    const resp = getMe().then((re) => {
-      setMe(re.data.data[0]);
-    });
-  }, []);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -97,17 +91,16 @@ export default function Topbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {console.log("me", me)}
       <Grid container>
         <Grid style={{ display: "flex", margin: "5px" }} item md={12}>
-          {me ? (
+          {data ? (
             <img
-              src={me.profile_image_url}
+              src={data.data.profile_image_url}
               style={{ width: "30px", borderRadius: "50%" }}
             />
           ) : null}
           <div>
-            <span>{me && me.display_name}</span>
+            <span>{data && data.data.display_name}</span>
             <div>{online}</div>
           </div>
         </Grid>
@@ -188,7 +181,7 @@ export default function Topbar() {
         classes={classes}
         useStyles={useStyles}
         color={color}
-        me={me}
+        data={data}
         menuId={menuId}
         handleProfileMenuOpen={handleProfileMenuOpen}
       />

@@ -3,7 +3,6 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import ReactPlayer from "react-player";
 import { useStyles } from "./styles";
-import { getSuggestedHomeStreamsCarousel } from "../../Service/Api/Api";
 import { Carousel } from "3d-react-carousal";
 import useGetHomeSuggested from "../../Hooks/useGetHomeStreamsCarousel";
 
@@ -13,14 +12,6 @@ export default function HomeCarousel() {
   const [suggestedHomeStreams, setSuggestedStreams] = useState([]);
   const [randomTrio, setRandomTrio] = useState([]);
   const { data } = useGetHomeSuggested();
-
-  // useEffect(() => {
-  //   const getHomeSuggested = async () => {
-  //     const res = await getSuggestedHomeStreamsCarousel();
-  //     setSuggestedStreams(res.data.data);
-  //   };
-  //   getHomeSuggested();
-  // }, []);
 
   useEffect(() => {
     let tempArray = [];
@@ -41,8 +32,6 @@ export default function HomeCarousel() {
 
     setRandomTrio(tempArray);
   }, [data]);
-
-  console.log(data?.data);
 
   let slides = [
     <ReactPlayer
@@ -70,10 +59,6 @@ export default function HomeCarousel() {
       playing={false}
     />,
   ];
-
-  console.log({ suggestedHomeStreams });
-  console.log({ randomTrio });
-
   // const Gallery = () => {
   //   const handleOnDragStart = (e) => e.preventDefault();
   //   return (

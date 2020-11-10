@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getGames } from "../../Service/Api/Api";
-import HomeCarousel from '../../Components/HomeCarousel'
+import HomeCarousel from "../../Components/HomeCarousel";
 import HomeSuggestedStreams from "../../Components/HomeSuggestedStreams";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Following from "../Following";
+import useGetGamesTop from "../../Hooks/useGetGamesTop";
 
 export default function Home() {
-  const [games, setGames] = useState();
-
-  useEffect(() => {
-    const resp = getGames().then((re) => {
-      setGames(re.data.data);
-    });
-  }, []);
+  const { data } = useGetGamesTop();
 
   return (
     <div>

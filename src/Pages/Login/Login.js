@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { getToken } from "../../Service/Api/Api";
 import { useHistory } from "react-router-dom";
 
 function Login() {

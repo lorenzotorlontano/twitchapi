@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { searchCategories, searchChannels } from "../../../Service/Api/Api";
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,7 +26,6 @@ function MainDetailsSearched({
   selectedNotific,
   all,
   id,
-  categories,
   more,
 }) {
   return (
