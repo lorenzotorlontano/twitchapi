@@ -22,18 +22,13 @@ import RouterView from "../../Components/RouterView/routerView";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
 import Grid from "@material-ui/core/Grid";
-import {
-  getStreams,
-  getMe,
-  getUsers,
-  getMyUser,
-  getUsersSearched,
-  searchChannels,
-} from "../../Service/Api/Api";
+import { searchChannels } from "../../Service/Api/Api";
 import "../Sidebar/StyleSidebar/sidebar.css";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-import MainSideBar from '../Sidebar/MainSideBar/mainSideBar'
+import MainSideBar from "../Sidebar/MainSideBar/mainSideBar";
+import useGetMyUser from "../../Hooks/useGetMyUser";
+import useSearchChannels from "../../Hooks/useSearchChannels";
 
 const drawerWidth = 250;
 
@@ -97,7 +92,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     marginRight: "10px",
     color: "white",
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
@@ -108,25 +102,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniDrawer({ streams, currentUrl }) {
   const classes = useStyles();
+  const { data } = useGetMyUser();
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
   const [isOver, setIsOver] = useState(false);
   const [users, setUsers] = useState(null);
   const [moreDown, setMoreDown] = useState(false);
   const [more, setMore] = useState(false);
-  const [myUser, setMyUser] = useState();
-  const [currentId, setCurrentId] = useState();
   const [color, setColor] = useState("#333");
   const [border, setBorder] = useState("0");
   const [param, setParam] = useState("");
   const [userIcon, setUserIcon] = useState(null);
   const [overUserIcon, setOverUserIcon] = useState("");
-
-  useEffect(() => {
-    const resp = getMyUser().then((re) => {
-      setMyUser(re);
-    });
-  }, []);
 
   const handleDrawerClose = () => {
     return (
@@ -134,6 +120,8 @@ export default function MiniDrawer({ streams, currentUrl }) {
       open === false ? (setMore(false), setMoreDown(false)) : null
     );
   };
+
+  const [open, setOpen] = useState(true);
 
   const switchStyle = () => {
     setColor("black");
@@ -150,11 +138,9 @@ export default function MiniDrawer({ streams, currentUrl }) {
   };
 
   const handleSearch = (e) => {
-    // if (e.key === "Enter" || e.keyCode === 13) {
     searchChannels(param).then((re) => {
       setUsers(re.data.data);
     });
-    // }
   };
 
   const handleDelete = () => {
@@ -173,11 +159,11 @@ export default function MiniDrawer({ streams, currentUrl }) {
   };
 
   let firstValue =
-    Math.floor(streams.length / 4) < 1 ? 1 : Math.floor(streams.length / 4); //5
+    Math.floor(streams?.length / 4) < 1 ? 1 : Math.floor(streams?.length / 4); //5
 
-  let i = Math.floor(streams.length / 2); // 10
+  let i = Math.floor(streams?.length / 2); // 10
 
-  let j = Math.floor(streams.length / 2 + streams.length / 4); // 15
+  let j = Math.floor(streams?.length / 2 + streams?.length / 4); // 15
 
   return (
     <div className={classes.root}>
@@ -195,38 +181,36 @@ export default function MiniDrawer({ streams, currentUrl }) {
           }),
         }}
       >
-       <MainSideBar
-        firstValue={firstValue}
-        i={i}
-        j={j}
-        handleHideUserIcon={handleHideUserIcon}
-        handleUserIcon={handleUserIcon}
-        handleDelete={handleDelete}
-        handleSearch={handleSearch}
-        handleChange={handleChange}
-        switchDefault={switchDefault}
-        switchStyle={switchStyle}
-        handleDrawerClose={handleDrawerClose}
-        classes={classes}
-        theme={theme}
-        open={open}
-        isOver={isOver}
-        moreDown={moreDown}
-        users={users}
-        more={more}
-        myUser={myUser}
-        currentId={currentId}
-        color={color}
-        border={border}
-        param={param}
-        userIcon={userIcon}
-        overUserIcon={overUserIcon}
-        drawerWidth={drawerWidth}
-        streams={streams}
-        currentUrl={currentUrl}
-       />
+        <MainSideBar
+          firstValue={firstValue}
+          i={i}
+          j={j}
+          handleHideUserIcon={handleHideUserIcon}
+          handleUserIcon={handleUserIcon}
+          handleDelete={handleDelete}
+          handleSearch={handleSearch}
+          handleChange={handleChange}
+          switchDefault={switchDefault}
+          switchStyle={switchStyle}
+          handleDrawerClose={handleDrawerClose}
+          classes={classes}
+          theme={theme}
+          open={open}
+          isOver={isOver}
+          moreDown={moreDown}
+          users={users}
+          more={more}
+          myUser={data}
+          color={color}
+          border={border}
+          param={param}
+          userIcon={userIcon}
+          overUserIcon={overUserIcon}
+          drawerWidth={drawerWidth}
+          streams={streams}
+          currentUrl={currentUrl}
+        />
       </Drawer>
-
       <RouterView />
     </div>
   );

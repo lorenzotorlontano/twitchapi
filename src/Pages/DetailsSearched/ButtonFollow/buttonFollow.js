@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { searchCategories, searchChannels } from "../../../Service/Api/Api";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,11 +11,17 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NotificationsOffOutlinedIcon from "@material-ui/icons/NotificationsOffOutlined";
 import ItemSearched from "../ItemSearched/itemSearched";
-import ButtonShowMore from '../ButtonShowMore/buttonShowMore'
-import ButtonShow from '../ButtonShow/buttonShow'
+import ButtonShowMore from "../ButtonShowMore/buttonShowMore";
+import ButtonShow from "../ButtonShow/buttonShow";
 
-function ButtonFollow({selectedIcon, handleSelection , selectedNotific, switchIcon, handleIcon, channels}) {
-  
+function ButtonFollow({
+  selectedIcon,
+  handleSelection,
+  selectedNotific,
+  switchIcon,
+  handleIcon,
+  channels,
+}) {
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -54,7 +59,6 @@ function ButtonFollow({selectedIcon, handleSelection , selectedNotific, switchIc
         ) : (
           <Button
             onClick={() => handleSelection(channels)}
-
             style={{
               color: "white",
               backgroundColor: "#772CE8",
@@ -62,12 +66,11 @@ function ButtonFollow({selectedIcon, handleSelection , selectedNotific, switchIc
               fontWeight: "bold",
             }}
           >
-            {console.log('channels', channels)}
             <FavoriteIcon style={{}} />
             Segui
           </Button>
         )}
-      </div> 
+      </div>
     </>
   );
 }

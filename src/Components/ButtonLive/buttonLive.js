@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  getSuggestedHomeStreams,
-  getStreamsById,
-  getChannel,
-  getStreamsDetails,
-  getUsers,
-} from "../../Service/Api/Api";
+import useGetStreamById from "../../Hooks/useGetStreamById";
 
 function ButtonLive({ id }) {
-  const [streamsDetails, setStreamsDetails] = useState();
-
-  useEffect(() => {
-    const resp = getStreamsById(id).then((re) => {
-      setStreamsDetails(re.data.data[0]);
-    });
-  }, []);
-
-  console.log("no matter where we breath", streamsDetails && streamsDetails);
+  const { data: streamsDetails } = useGetStreamById(id);
 
   return (
     <>
-      {streamsDetails ? (
+      {streamsDetails && streamsDetails.data[0] ? (
         <div style={{ height: "23px", width: "43px" }}>
           <button
             style={{
@@ -36,7 +22,7 @@ function ButtonLive({ id }) {
               borderBottomRightRadius: "3px",
             }}
           >
-            {streamsDetails ? streamsDetails.type : null}
+            {streamsDetails && streamsDetails?.data[0]?.type}
           </button>
         </div>
       ) : null}
