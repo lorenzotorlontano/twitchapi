@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  getCurrentUserFollows,
-  getVideosById,
-  getUsers,
-} from "../../Service/Api/Api";
+import { getCurrentUserFollows, getVideosById } from "../../Service/Api/Api";
 import ReactPlayer from "react-player";
 import Grid from "@material-ui/core/Grid";
 import ImgChannel from "../../Pages/Following/ImgChannel/imgChannel";
@@ -12,7 +8,6 @@ import VideoDetails from "../../Components/VideoDetails";
 export default function FollowingVideosTab() {
   const [myFollows, setMyFollows] = useState([]);
   const [myFollowedChannels, setMyFollowedChannels] = useState([]);
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const getMyFollows = async () => {
@@ -34,21 +29,6 @@ export default function FollowingVideosTab() {
       });
     }
   }, [myFollows]);
-
-  useEffect(() => {
-    const promises = [];
-    if (!!myFollows.length) {
-      myFollows.forEach(
-        (val) => val.to_id && promises.push(getUsers(val.to_id))
-      );
-      Promise.all(promises).then((responses) => {
-        const followedChannels = responses.map((res) => res.data.data[0]);
-        setUsers(followedChannels);
-      });
-    }
-  }, [myFollows]);
-
-  console.log("dio bono", users);
 
   const thumbnailFormatter = (url) => {
     console.log("Munch url", url);

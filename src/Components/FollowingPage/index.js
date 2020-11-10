@@ -25,7 +25,6 @@ export default function FollowingPage() {
   const [videoThumbs, setVideoThumbs] = useState([]);
 
   const [videoInfo, setVideoInfo] = useState([]);
-  const [usersDetails, setUsersDetails] = useState();
 
   const [showMore, setShowMore] = useState(false);
 
@@ -35,24 +34,6 @@ export default function FollowingPage() {
       setMyFollows(res.data.data);
     };
     getMyFollows();
-  }, []);
-
-  const getVideoThumbs = async (streamerId) => {
-    const res = await getStreamsById(streamerId);
-    setVideoThumbs(res.data.data);
-    let thumbUrl = videoThumbs[0]?.thumbnail_url;
-    if (thumbUrl !== undefined) {
-      console.log({ thumbUrl });
-    }
-    // return (
-    //     thumbUrl
-    // )
-  };
-
-  useEffect(() => {
-    const res = getUsers().then((re) => {
-      setUsersDetails(re.data.data[0]);
-    });
   }, []);
 
   useEffect(() => {
